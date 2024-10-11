@@ -1,7 +1,7 @@
 package com.example.bismillah.ui.theme
 
 import androidx.compose.ui.graphics.Color
-
+//ini daftar warna
 val YaleBlue = Color(0xFF00356B)
 val LemonChiffon = Color(0xFFFAF0CA)
 val NaplesYellow = Color(0xFFF4D35E)
