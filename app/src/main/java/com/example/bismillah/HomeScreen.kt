@@ -90,7 +90,7 @@ fun UserProfileSection() {
                     horizontalArrangement = Arrangement.Start
                 ) {
                     Column {
-                        Text(text = "Halo, Indri", fontSize = 13.sp, fontWeight = FontWeight.Bold)
+                        Text(text = "Halo, Indri", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = SandyBrown)
                         Text(text = "Selamat datang kembali di Nutric", fontSize = 11.sp)
                     }
                 }

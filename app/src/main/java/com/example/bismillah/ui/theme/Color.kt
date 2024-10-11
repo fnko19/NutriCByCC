@@ -7,6 +7,7 @@ val LemonChiffon = Color(0xFFFAF0CA)
 val NaplesYellow = Color(0xFFF4D35E)
 val SandyBrown = Color(0xFFEE964B)
 val Tomato = Color(0xFFF95738)
+
 val Purple80 = Color(0xFFD0BCFF)
 val PurpleGrey80 = Color(0xFFCCC2DC)
 val Pink80 = Color(0xFFEFB8C8)
