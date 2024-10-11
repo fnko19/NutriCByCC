@@ -183,6 +183,7 @@ fun ActivityCategory(icon: Painter, title: String) {
     }
 }
 
+
 @Composable
 fun StuntingWarningSection() {
     Card(
