@@ -253,6 +253,7 @@ fun StimulationActivity(activity: String) {
     Spacer(modifier = Modifier.height(8.dp))
 }
 
+
 @Composable
 fun DailyJournalSection() {
     Column {
