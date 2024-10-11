@@ -90,7 +90,7 @@ fun UserProfileSection() {
                     horizontalArrangement = Arrangement.Start
                 ) {
                     Column {
-                        Text(text = "Halo, Indri", fontSize = 13.sp, fontWeight = FontWeight.Bold)
+                        Text(text = "Halo, Indri", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = SandyBrown)
                         Text(text = "Selamat datang kembali di Nutric", fontSize = 11.sp)
                     }
                 }
@@ -183,6 +183,7 @@ fun ActivityCategory(icon: Painter, title: String) {
     }
 }
 
+
 @Composable
 fun StuntingWarningSection() {
     Card(
@@ -251,6 +252,7 @@ fun StimulationActivity(activity: String) {
     }
     Spacer(modifier = Modifier.height(8.dp))
 }
+
 
 @Composable
 fun DailyJournalSection() {
