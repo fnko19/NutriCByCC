@@ -56,6 +56,9 @@ dependencies {
     implementation ("androidx.compose.ui:ui:1.5.2")
     implementation ("androidx.compose.material:material:1.5.2")
     implementation ("androidx.compose.ui:ui-tooling-preview:1.5.2")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.6")
+    implementation ("androidx.navigation:navigation-compose:2.6.0")
+    implementation ("androidx.navigation:navigation-compose:2.6.0-alpha01")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -72,4 +75,5 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     debugImplementation ("androidx.compose.ui:ui-tooling:1.5.2")
+
 }
