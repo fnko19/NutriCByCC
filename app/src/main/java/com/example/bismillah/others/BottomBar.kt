@@ -9,12 +9,10 @@ import androidx.compose.foundation.layout.*
 import com.example.bismillah.R
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.Modifier
-import com.example.bismillah.ui.theme.YaleBlue
 import com.example.bismillah.ui.theme.Poppins
 
 @Composable
@@ -27,8 +25,8 @@ fun BottomBar(navController: NavHostController, modifier: Modifier = Modifier) {
     )
 
     BottomNavigation(
-        backgroundColor = YaleBlue,
-        contentColor = Color.White,
+        backgroundColor = Color.White,
+        contentColor = Color.Black,
         modifier = modifier
     ) {
         val navBackStackEntry = navController.currentBackStackEntryAsState()
@@ -39,10 +37,11 @@ fun BottomBar(navController: NavHostController, modifier: Modifier = Modifier) {
                     Icon(
                         painter = painterResource(id = item.icon),
                         contentDescription = item.title,
+                        tint = Color.Black,
                         modifier = Modifier.size(32.dp) // Set your desired size here
                     )
                 },
-                label = { Text(text = item.title, fontFamily = Poppins, fontSize = 16.sp ) },
+                label = { Text(text = item.title, color = Color.Black, fontFamily = Poppins, fontSize = 11.sp ) },
                 selected = currentRoute == item.route,
                 onClick = {
                     navController.navigate(item.route) {
@@ -60,10 +59,10 @@ fun BottomBar(navController: NavHostController, modifier: Modifier = Modifier) {
 
 
 sealed class BottomNavItem(val title: String, val icon: Int, val route: String) {
-    object Home : BottomNavItem("Home", R.drawable.home1, "home")
-    object Konten : BottomNavItem("Konten", R.drawable.konten1, "konten")
-    object Konsultasi : BottomNavItem("Konsul", R.drawable.konsultasi1, "konsultasi")
-    object Profil : BottomNavItem("Profil", R.drawable.profil1, "profil")
+    object Home : BottomNavItem("Home", R.drawable.home2, "home")
+    object Konten : BottomNavItem("Resep", R.drawable.konten2, "konten")
+    object Konsultasi : BottomNavItem("Konsultasi", R.drawable.konsultasi2, "konsultasi")
+    object Profil : BottomNavItem("Profil", R.drawable.profil2, "profil")
 }
 
 @Composable
