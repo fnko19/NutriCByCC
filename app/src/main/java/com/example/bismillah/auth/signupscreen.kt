@@ -1,6 +1,8 @@
 package com.example.bismillah.auth
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -51,17 +53,18 @@ import androidx.compose.runtime.remember
 @Composable
 fun SignupScreen(navController: NavController, userViewModel: UserViewModel = viewModel()){
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.White)
     ) {
         // Background Image
-        Image(
-            painter = painterResource(id = R.drawable.bgsigniu), // Ganti dengan resource gambar background Anda
-            contentDescription = "Background Image",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
-        )
+//        Image(
+//            painter = painterResource(id = R.drawable.bglogin), // Ganti dengan resource background gambar Anda
+//            contentDescription = "Background Image",
+//            contentScale = ContentScale.Crop,
+//            modifier = Modifier.fillMaxSize()
+//        )
 
-        // Sign Up Content
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -69,21 +72,13 @@ fun SignupScreen(navController: NavController, userViewModel: UserViewModel = vi
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Spacer(modifier = Modifier.height(40.dp))
-
-            // Avatar or logo image at the top
-            Image(
-                painter = painterResource(id = R.drawable.logocrop),
-                contentDescription = "Logo",
-                modifier = Modifier.size(240.dp)
-            )
-            Spacer(modifier = Modifier.height(0.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
             Text(
                 text = "Create Your Account",
                 fontFamily = Poppins,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Normal,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
                 color = Color.Black
             )
 
@@ -91,7 +86,7 @@ fun SignupScreen(navController: NavController, userViewModel: UserViewModel = vi
 
             // Name TextField
             TextField(
-                value = userViewModel.userData.collectAsState().value.name, // Ambil nama dari ViewModel
+                value = userViewModel.userData.collectAsState().value.name,
                 onValueChange = { name ->
                     userViewModel.updateUserData(name, userViewModel.userData.value.email, userViewModel.userData.value.password)
                 },
@@ -99,8 +94,7 @@ fun SignupScreen(navController: NavController, userViewModel: UserViewModel = vi
                     Text(
                         text = "Name",
                         fontFamily = Poppins,
-                        fontSize = 16.sp,
-                        modifier = Modifier.fillMaxWidth()
+                        fontSize = 14.sp
                     )
                 },
                 modifier = Modifier
@@ -108,13 +102,9 @@ fun SignupScreen(navController: NavController, userViewModel: UserViewModel = vi
                     .height(50.dp),
                 shape = RoundedCornerShape(8.dp),
                 colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = Color.White,
+                    backgroundColor = Color(0xFFFFF1C9),
                     unfocusedIndicatorColor = Color.Transparent,
                     focusedIndicatorColor = Color.Transparent
-                ),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Next
                 )
             )
 
@@ -122,7 +112,7 @@ fun SignupScreen(navController: NavController, userViewModel: UserViewModel = vi
 
             // Email TextField
             TextField(
-                value = userViewModel.userData.collectAsState().value.email, // Ambil email dari ViewModel
+                value = userViewModel.userData.collectAsState().value.email,
                 onValueChange = { email ->
                     userViewModel.updateUserData(userViewModel.userData.value.name, email, userViewModel.userData.value.password)
                 },
@@ -130,8 +120,7 @@ fun SignupScreen(navController: NavController, userViewModel: UserViewModel = vi
                     Text(
                         text = "Email",
                         fontFamily = Poppins,
-                        fontSize = 16.sp,
-                        modifier = Modifier.fillMaxWidth()
+                        fontSize = 14.sp
                     )
                 },
                 modifier = Modifier
@@ -139,13 +128,9 @@ fun SignupScreen(navController: NavController, userViewModel: UserViewModel = vi
                     .height(50.dp),
                 shape = RoundedCornerShape(8.dp),
                 colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = Color.White,
+                    backgroundColor = Color(0xFFFFF1C9),
                     unfocusedIndicatorColor = Color.Transparent,
                     focusedIndicatorColor = Color.Transparent
-                ),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Email,
-                    imeAction = ImeAction.Next
                 )
             )
 
@@ -153,7 +138,7 @@ fun SignupScreen(navController: NavController, userViewModel: UserViewModel = vi
 
             // Password TextField
             TextField(
-                value = userViewModel.userData.collectAsState().value.password, // Ambil password dari ViewModel
+                value = userViewModel.userData.collectAsState().value.password,
                 onValueChange = { password ->
                     userViewModel.updateUserData(userViewModel.userData.value.name, userViewModel.userData.value.email, password)
                 },
@@ -161,8 +146,7 @@ fun SignupScreen(navController: NavController, userViewModel: UserViewModel = vi
                     Text(
                         text = "Password",
                         fontFamily = Poppins,
-                        fontSize = 16.sp,
-                        modifier = Modifier.fillMaxWidth()
+                        fontSize = 14.sp
                     )
                 },
                 modifier = Modifier
@@ -170,13 +154,9 @@ fun SignupScreen(navController: NavController, userViewModel: UserViewModel = vi
                     .height(50.dp),
                 shape = RoundedCornerShape(8.dp),
                 colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = Color.White,
+                    backgroundColor = Color(0xFFFFF1C9),
                     unfocusedIndicatorColor = Color.Transparent,
                     focusedIndicatorColor = Color.Transparent
-                ),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Password,
-                    imeAction = ImeAction.Done
                 )
             )
 
@@ -185,7 +165,6 @@ fun SignupScreen(navController: NavController, userViewModel: UserViewModel = vi
             // Sign Up Button
             Button(
                 onClick = {
-                    // Handle Sign Up logic here
                     navController.navigate("home") {
                         popUpTo(navController.graph.startDestinationId) {
                             saveState = true
@@ -195,18 +174,45 @@ fun SignupScreen(navController: NavController, userViewModel: UserViewModel = vi
                     }
                 },
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = SandyBrown,
-                    contentColor = Color.White
+                    backgroundColor = Color.Transparent,
+                    contentColor = Color(0xFFFFA500)
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
-                shape = RoundedCornerShape(8.dp)
+                shape = RoundedCornerShape(8.dp),
+                border = BorderStroke(5.dp, Color(0xFFFFA500))
             ) {
-                Text(text = "Sign Up", fontFamily = Poppins, fontSize = 16.sp)
+                Text(
+                    text = "Sign Up",
+                    fontFamily = Poppins,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFFFFA500) // Warna teks oranye
+                )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = "Or Sign Up With",
+                fontFamily = Poppins,
+                fontSize = 12.sp,
+                color = Color.Black
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Google Sign Up Button (simulated as an Image)
+            Image(
+                painter = painterResource(id = R.drawable.google), // Ganti dengan id drawable logo Google
+                contentDescription = "Google Logo",
+                modifier = Modifier
+                    .size(35.dp)
+                    .clickable(onClick = { /* Handle Google Sign Up */ })
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
 
             // Sign In Option
             Row(
@@ -214,23 +220,34 @@ fun SignupScreen(navController: NavController, userViewModel: UserViewModel = vi
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "Already have an account?", color = Color.Black, fontSize = 14.sp, fontFamily = Poppins)
+                Text(text = "Already have an account?", color = Color.Black, fontSize = 12.sp, fontFamily = Poppins)
                 TextButton(
                     onClick = { navController.navigate("signin") },
                     contentPadding = PaddingValues(0.dp)
                 ) {
-                    Text(text = "Sign In", color = Color.Blue, fontSize = 14.sp, fontFamily = Poppins)
+                    Text(text = "Sign In", color = Color.Blue, fontSize = 12.sp, fontFamily = Poppins)
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
+            Image(
+                painter = painterResource(id = R.drawable.chatbot), // Ganti dengan resource robot Anda
+                contentDescription = "Robot Logo",
+                modifier = Modifier
+                    .size(120.dp) // Sesuaikan ukuran sesuai kebutuhan
+                    .padding(bottom = 16.dp) // Padding bawah untuk sedikit jarak dari tepi layar
+            )
         }
 
+
+
+        // Tulisan Logo di Bawah
         Image(
-            painter = painterResource(id = R.drawable.tulisan),
-            contentDescription = "TulisanLogo",
+            painter = painterResource(id = R.drawable.tulisan), // Ganti dengan resource logo tulisan Anda
+            contentDescription = "Tulisan Logo",
             modifier = Modifier
                 .size(80.dp)
                 .align(Alignment.BottomCenter)
+                .padding(bottom = 8.dp) // Padding bawah untuk memposisikan logo
         )
     }
 }

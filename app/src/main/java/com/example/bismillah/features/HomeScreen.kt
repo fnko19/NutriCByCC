@@ -12,15 +12,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.bismillah.ui.theme.NaplesYellow
 import com.example.bismillah.ui.theme.SandyBrown
+import com.example.bismillah.ui.theme.White
 import com.example.bismillah.ui.theme.YaleBlue
+import com.example.bismillah.ui.theme.Grey
+import com.example.bismillah.ui.theme.Gray
 import com.example.bismillah.R
 import com.example.bismillah.ui.theme.Poppins
 import com.example.bismillah.others.BottomBar
@@ -28,33 +33,22 @@ import androidx.navigation.NavHostController
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
+import com.example.bismillah.ui.theme.LemonChiffon
+import androidx.compose.foundation.clickable
+import com.example.bismillah.others.Screen
 
 @Composable
 fun HomeScreen(navController: NavHostController) {
     Box(
         modifier = Modifier.fillMaxSize()
-    ) {
-        // Background Image
-        Image(
-            painter = painterResource(id = R.drawable.bglp), // Ganti URL dengan gambar latar belakang Anda
-            contentDescription = "Background Image",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
-        )
-        Image(
-            painter = painterResource(id = R.drawable.bglp3), // Ganti URL dengan gambar latar belakang Anda
-            contentDescription = "Background Image",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.BottomCenter)
-        )
+    ){
 
         // Content on top of the background
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(18.dp),
+                .background(color = Color(0xFFF5F5F5))
+                .padding(16.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
 
@@ -63,19 +57,33 @@ fun HomeScreen(navController: NavHostController) {
             UserProfileSection()
 
             // Kategori aktivitas (Tumbuh, Kembang, Vaksin)
-            ActivityCategories()
+            ActivityCategories(onCategoryClick = { category ->
+                when (category) {
+                    "Tumbuh" -> navController.navigate(Screen.Tumbuh.route)
+                    "Kembang" -> navController.navigate(Screen.Kembang.route)
+                    "Vaksin" -> navController.navigate(Screen.Vaksin.route)
+                }
+            })
 
             // Peringatan stunting
             StuntingWarningSection()
 
-            // Aktivitas stimulasi
-            StimulationActivities()
+            Column(
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState()) // Bagian scroll dimulai dari sini
+                    .weight(1f) // Mengisi ruang yang tersisa
+                    .fillMaxHeight()
+            ) {
+                // Aktivitas stimulasi
+                StimulationActivities()
 
-            // Jurnal harian
-            DailyJournalSection()
+                // Jurnal harian
+                DailyJournalSection()
 
-            Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(48.dp))
+            }
         }
+        Spacer(modifier = Modifier.height(32.dp))
         // Add the BottomBar overlaying the images
         BottomBar(navController = navController, modifier = Modifier.align(Alignment.BottomCenter))
     }
@@ -87,7 +95,7 @@ fun HomeScreen(navController: NavHostController) {
 fun UserProfileSection() {
     Column(modifier = Modifier
         .fillMaxWidth()
-        .padding(8.dp)) {
+        .padding(0.dp)) {
         // Bagian untuk Gambar Profil
         UserProfileImage() // Memanggil fungsi terpisah untuk gambar profil
 
@@ -112,12 +120,6 @@ fun UserProfileSection() {
                     verticalAlignment = Alignment.CenterVertically, // Menyelaraskan gambar dan teks secara vertikal
                     horizontalArrangement = Arrangement.Start
                 ) {
-                    // Menambahkan Gambar di sini
-                    Image(
-                        painter = painterResource(id = R.drawable.daycare), // Ganti dengan ID gambar Anda
-                        contentDescription = "User Image",
-                        modifier = Modifier.size(30.dp) // Ukuran gambar
-                    )
 
                     Spacer(modifier = Modifier.width(8.dp)) // Jarak antara gambar dan teks
 
@@ -125,7 +127,7 @@ fun UserProfileSection() {
                         Text(
                             text = "Halo, Indri",
                             fontFamily = Poppins,
-                            fontSize = 14.sp,
+                            fontSize = 12.sp,
                             fontWeight = FontWeight.Bold,
                             color = SandyBrown
                         )
@@ -155,7 +157,7 @@ fun UserProfileSection() {
                         Text(
                             text = "5.5 kg",
                             fontFamily = Poppins,
-                            fontSize = 14.sp,
+                            fontSize = 12.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color(0xFFFF9800)
                         )
@@ -165,7 +167,7 @@ fun UserProfileSection() {
             }
         }
     }
-    Spacer(modifier = Modifier.height(40.dp))
+    Spacer(modifier = Modifier.height(8.dp))
 }
 
 
@@ -182,7 +184,7 @@ fun UserProfileImage() {
         Image(
             painter = painterResource(id = R.drawable.pp), // Ganti "pp" dengan nama file di drawable
             contentDescription = "Profile Image",
-            modifier = Modifier.size(50.dp)
+            modifier = Modifier.size(60.dp)
         )
 
         // Spacer untuk memberikan jarak antara gambar dan teks
@@ -193,7 +195,7 @@ fun UserProfileImage() {
             Text(
                 text = "Indri",
                 fontFamily = Poppins,
-                fontSize = 14.sp, // Ukuran teks
+                fontSize = 16.sp, // Ukuran teks
                 fontWeight = FontWeight.Normal, // Berat font normal
                 color = Color.Black // Warna teks hitam
             )
@@ -202,39 +204,58 @@ fun UserProfileImage() {
                 fontFamily = Poppins,
                 fontSize = 12.sp, // Ukuran teks lebih kecil untuk baris kedua
                 fontWeight = FontWeight.Light, // Berat font lebih ringan
-                color = Color.Gray // Warna teks abu-abu untuk kontras
-            )
+                color = Grey)
         }
         Spacer(modifier = Modifier.weight(1f))
-
-        // Gambar lonceng yang diposisikan di kanan
-        Image(
-            painter = painterResource(id = R.drawable.bell), // Ganti "bell" dengan nama file di drawable
-            contentDescription = "Bell Icon",
-            modifier = Modifier.size(20.dp)
-        )
 
     }
 }
 
 @Composable
-fun ActivityCategories() {
+fun ActivityCategories(onCategoryClick: (String) -> Unit) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .padding(top = 16.dp)
+            .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceAround
     ) {
-        ActivityCategory(icon = painterResource(id = R.drawable.tumbuh), title = "Tumbuh")
-        ActivityCategory(icon = painterResource(id = R.drawable.kembang), title = "Kembang")
-        ActivityCategory(icon = painterResource(id = R.drawable.vaksin), title = "Vaksin")
+        ActivityCategory(
+            icon = painterResource(id = R.drawable.tumbuh),
+            title = "Tumbuh",
+            onClick = { onCategoryClick("Tumbuh") }
+        )
+        ActivityCategory(
+            icon = painterResource(id = R.drawable.kembang),
+            title = "Kembang",
+            onClick = { onCategoryClick("Kembang") }
+        )
+        ActivityCategory(
+            icon = painterResource(id = R.drawable.vaksin),
+            title = "Vaksin",
+            onClick = { onCategoryClick("Vaksin") }
+        )
     }
     Spacer(modifier = Modifier.height(16.dp))
 }
 
 @Composable
-fun ActivityCategory(icon: Painter, title: String) {
+fun ActivityCategory(icon: Painter, title: String, onClick: () -> Unit) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Icon(painter = icon, contentDescription = title, modifier = Modifier.size(50.dp), tint = Color.Unspecified)
-        Text(text = title,  fontFamily = Poppins, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = YaleBlue)
+        Icon(
+            painter = icon,
+            contentDescription = title,
+            modifier = Modifier
+                .size(55.dp)
+                .clickable(onClick = onClick), // Menambahkan aksi klik
+            tint = Color.Unspecified
+        )
+        Text(
+            text = title,
+            fontFamily = Poppins,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Bold,
+            color = YaleBlue
+        )
     }
 }
 
@@ -243,7 +264,9 @@ fun StuntingWarningSection() {
     Card(
         backgroundColor = SandyBrown,
         shape = RoundedCornerShape(10.dp),
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .shadow(8.dp)
     ) {
         Column(
             modifier = Modifier.padding(10.dp)
@@ -258,7 +281,7 @@ fun StuntingWarningSection() {
                     fontFamily = Poppins,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Bold,
-                    color = YaleBlue,
+                    color = White,
                     modifier = Modifier
                         .weight(2.5f) // Membuat teks mengisi ruang yang tersisa
                         .fillMaxWidth(), // Mengisi lebar maksimum
@@ -316,11 +339,11 @@ fun StimulationActivities() {
 @Composable
 fun StimulationActivity(activity: String) {
     Card(
-        backgroundColor = NaplesYellow, // Warna oranye
+        backgroundColor = LemonChiffon , // Warna oranye
         shape = RoundedCornerShape(0.dp), // Menambahkan sudut yang melengkung
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp) // Memberikan padding vertikal antar Card
+            .padding(vertical = 6.dp) // Memberikan padding vertikal antar Card
     ) {
         Row(
             modifier = Modifier
@@ -341,13 +364,12 @@ fun StimulationActivity(activity: String) {
 }
 
 
-
 @Composable
 fun DailyJournalSection() {
     Card(
         shape = RoundedCornerShape(10.dp),
         modifier = Modifier.fillMaxWidth(),
-        backgroundColor = SandyBrown,
+        backgroundColor = White,
     ){
         Column(modifier = Modifier.padding(10.dp)) {
             Text(text = "Jurnal Harian Perkembangan Anak",  fontFamily = Poppins, fontSize = 14.sp, fontWeight = FontWeight.Bold)
@@ -356,12 +378,12 @@ fun DailyJournalSection() {
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Column(modifier = Modifier.padding(8.dp)) {
-                    Text(text = "09 Oktober 2024", fontFamily = Poppins, fontSize = 13.sp, fontWeight = FontWeight.Bold)
+                Column(modifier = Modifier.padding(12.dp)) {
+                    Text(text = "09 Oktober 2024", fontFamily = Poppins, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "• Hari ini Indri mulai merangkak untuk pertama kali!")
-                    Text(text = "• Indri mengucapkan kata pertamanya, \"Papa!\"")
-                    Text(text = "• Hari ini Indri berdiri sendiri dengan berpegangan pada meja")
+                    Text(text = "• Hari ini Indri mulai merangkak untuk pertama kali!", fontFamily = Poppins, fontSize = 12.sp)
+                    Text(text = "• Indri mengucapkan kata pertamanya, \"Papa!\"", fontFamily = Poppins, fontSize = 12.sp)
+                    Text(text = "• Hari ini Indri berdiri sendiri dengan berpegangan pada meja", fontFamily = Poppins, fontSize = 12.sp)
                 }
             }
         }
