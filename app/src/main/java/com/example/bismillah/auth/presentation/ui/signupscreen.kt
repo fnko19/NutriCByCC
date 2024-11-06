@@ -1,5 +1,6 @@
-package com.example.bismillah.auth
+package com.example.bismillah.auth.presentation.ui
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.BorderStroke
@@ -16,7 +17,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
@@ -26,32 +26,53 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.bismillah.R
+import com.example.bismillah.auth.presentation.viewModel.AuthView
 import com.example.bismillah.ui.theme.Poppins
-import com.example.bismillah.ui.theme.SandyBrown
-import com.example.bismillah.user.UserViewModel
-import androidx.compose.foundation.clickable
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.compose.runtime.collectAsState
-import com.example.bismillah.user.UserData
-import kotlinx.coroutines.flow.StateFlow
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
+import com.example.bismillah.auth.data.SignUpData
+import com.example.bismillah.auth.presentation.viewModel.AuthState
+
 
 @Composable
-fun SignupScreen(navController: NavController, userViewModel: UserViewModel = viewModel()){
+fun SignupScreen(navController: NavController, authViewModel: AuthView){
+    var email by remember {
+        mutableStateOf("")
+    }
+    var password by remember {
+        mutableStateOf("")
+    }
+
+    var name by remember{
+        mutableStateOf("")
+    }
+    val authState = authViewModel.authState.observeAsState()
+    val context = LocalContext.current
+
+    LaunchedEffect(authState.value) {
+        when(authState.value){
+            is AuthState.Authenticated -> navController.navigate("signin")
+            is AuthState.Error -> Toast.makeText(context,
+                (authState.value as AuthState.Error).message, Toast.LENGTH_SHORT).show()
+            else -> Unit
+        }
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -68,7 +89,7 @@ fun SignupScreen(navController: NavController, userViewModel: UserViewModel = vi
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = 16.dp, vertical = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -86,9 +107,8 @@ fun SignupScreen(navController: NavController, userViewModel: UserViewModel = vi
 
             // Name TextField
             TextField(
-                value = userViewModel.userData.collectAsState().value.name,
-                onValueChange = { name ->
-                    userViewModel.updateUserData(name, userViewModel.userData.value.email, userViewModel.userData.value.password)
+                value = name,
+                onValueChange = { name = it
                 },
                 placeholder = {
                     Text(
@@ -112,9 +132,8 @@ fun SignupScreen(navController: NavController, userViewModel: UserViewModel = vi
 
             // Email TextField
             TextField(
-                value = userViewModel.userData.collectAsState().value.email,
-                onValueChange = { email ->
-                    userViewModel.updateUserData(userViewModel.userData.value.name, email, userViewModel.userData.value.password)
+                value = email,
+                onValueChange = { email = it
                 },
                 placeholder = {
                     Text(
@@ -138,9 +157,8 @@ fun SignupScreen(navController: NavController, userViewModel: UserViewModel = vi
 
             // Password TextField
             TextField(
-                value = userViewModel.userData.collectAsState().value.password,
-                onValueChange = { password ->
-                    userViewModel.updateUserData(userViewModel.userData.value.name, userViewModel.userData.value.email, password)
+                value = password,
+                onValueChange = { password = it
                 },
                 placeholder = {
                     Text(
@@ -165,30 +183,25 @@ fun SignupScreen(navController: NavController, userViewModel: UserViewModel = vi
             // Sign Up Button
             Button(
                 onClick = {
-                    navController.navigate("home") {
-                        popUpTo(navController.graph.startDestinationId) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
+                    val signUpData = SignUpData(name = name, email = email, password = password)
+                    authViewModel.signUp(signUpData)
                 },
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color.Transparent,
-                    contentColor = Color(0xFFFFA500)
+                    backgroundColor = Color(0xFFFFD54F),
+                    contentColor = Color.White
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
                 shape = RoundedCornerShape(8.dp),
-                border = BorderStroke(5.dp, Color(0xFFFFA500))
+                border = BorderStroke(5.dp, Color(0xFFFFD54F))
             ) {
                 Text(
-                    text = "Sign Up",
+                    text = "Create Account",
                     fontFamily = Poppins,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFFFFA500) // Warna teks oranye
+                    color = Color.White
                 )
             }
 
@@ -203,9 +216,9 @@ fun SignupScreen(navController: NavController, userViewModel: UserViewModel = vi
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Google Sign Up Button (simulated as an Image)
+
             Image(
-                painter = painterResource(id = R.drawable.google), // Ganti dengan id drawable logo Google
+                painter = painterResource(id = R.drawable.google),
                 contentDescription = "Google Logo",
                 modifier = Modifier
                     .size(35.dp)
@@ -233,7 +246,7 @@ fun SignupScreen(navController: NavController, userViewModel: UserViewModel = vi
                 painter = painterResource(id = R.drawable.chatbot), // Ganti dengan resource robot Anda
                 contentDescription = "Robot Logo",
                 modifier = Modifier
-                    .size(120.dp) // Sesuaikan ukuran sesuai kebutuhan
+                    .size(220.dp) // Sesuaikan ukuran sesuai kebutuhan
                     .padding(bottom = 16.dp) // Padding bawah untuk sedikit jarak dari tepi layar
             )
         }
@@ -245,15 +258,15 @@ fun SignupScreen(navController: NavController, userViewModel: UserViewModel = vi
             painter = painterResource(id = R.drawable.tulisan), // Ganti dengan resource logo tulisan Anda
             contentDescription = "Tulisan Logo",
             modifier = Modifier
-                .size(80.dp)
+                .size(72.dp)
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 8.dp) // Padding bawah untuk memposisikan logo
         )
     }
 }
 
-@Preview
-@Composable
-fun SignUpPreview() {
-    SignupScreen(navController = rememberNavController())
-}
+//@Preview
+//@Composable
+//fun SignUpPreview() {
+//    SignupScreen()
+//}
