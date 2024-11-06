@@ -78,7 +78,6 @@ fun KontenScreen(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Greeting
             androidx.compose.material3.Text(
                 text = "Haloo mama Indri! \nMau masak apa hari ini? ",
                 fontSize = 14.sp,

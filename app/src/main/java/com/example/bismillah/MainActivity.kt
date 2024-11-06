@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.MaterialTheme
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -15,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.bismillah.ui.theme.BismillahTheme
 import androidx.compose.material3.Surface
 import androidx.navigation.compose.rememberNavController
+import com.example.bismillah.auth.presentation.viewModel.AuthView
 import com.example.bismillah.others.NavGraph
 
 class MainActivity : ComponentActivity() {
@@ -24,7 +26,8 @@ class MainActivity : ComponentActivity() {
             BismillahTheme {
                 val navController = rememberNavController()
                 Surface(color = MaterialTheme.colorScheme.background) {
-                    NavGraph(navController = navController)
+                    val authViewModel: AuthView by viewModels()
+                    NavGraph(navController = navController, authViewModel = authViewModel)
                 }
             }
         }

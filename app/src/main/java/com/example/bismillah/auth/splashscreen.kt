@@ -24,7 +24,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashScreen(navController: NavController) {
     LaunchedEffect(true) {
-        delay(3000) // Delay for 3 seconds
+        delay(3000)
         navController.navigate(Screen.Start.route) {
             popUpTo(Screen.Splash.route) {
                 inclusive = true
@@ -32,15 +32,13 @@ fun SplashScreen(navController: NavController) {
         }
     }
 
-    // Box dengan background berwarna kuning
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(NaplesYellow) // Warna kuning
+            .background(NaplesYellow)
             .padding(16.dp),
         contentAlignment = Alignment.Center
     ) {
-        // Gambar logo di tengah layar
         val image: Painter = painterResource(id = R.drawable.logo)
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -51,12 +49,11 @@ fun SplashScreen(navController: NavController) {
                 contentDescription = "App Logo",
                 modifier = Modifier
                     .size(200.dp)
-                    .padding(bottom = 16.dp) // Jarak antara logo dan progress indicator
+                    .padding(bottom = 16.dp)
             )
 
-            // Gambar loading (CircularProgressIndicator)
             CircularProgressIndicator(
-                color = Color.White, // Warna indikator
+                color = Color.White,
                 strokeWidth = 4.dp,
                 modifier = Modifier
                     .size(50.dp)

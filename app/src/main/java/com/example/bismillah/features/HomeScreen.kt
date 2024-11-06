@@ -61,7 +61,7 @@ fun HomeScreen(navController: NavHostController) {
                 when (category) {
                     "Tumbuh" -> navController.navigate(Screen.Tumbuh.route)
                     "Kembang" -> navController.navigate(Screen.Kembang.route)
-                    "Vaksin" -> navController.navigate(Screen.Vaksin.route)
+                    "Kalkulator" -> navController.navigate(Screen.Kalkulator.route)
                 }
             })
 
@@ -231,8 +231,8 @@ fun ActivityCategories(onCategoryClick: (String) -> Unit) {
         )
         ActivityCategory(
             icon = painterResource(id = R.drawable.vaksin),
-            title = "Vaksin",
-            onClick = { onCategoryClick("Vaksin") }
+            title = "Cek Gizi",
+            onClick = { onCategoryClick("Kalkulator") }
         )
     }
     Spacer(modifier = Modifier.height(16.dp))

@@ -1,7 +1,7 @@
-package com.example.bismillah.auth
+package com.example.bismillah.auth.presentation.ui
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -22,26 +22,45 @@ import com.example.bismillah.ui.theme.Poppins
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import com.example.bismillah.ui.theme.SandyBrown
 import androidx.compose.foundation.clickable
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.bismillah.user.UserViewModel
-import androidx.compose.runtime.collectAsState
-import com.example.bismillah.user.UserData
-import kotlinx.coroutines.flow.StateFlow
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import com.example.bismillah.ui.theme.Poppins
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
+import com.example.bismillah.auth.data.SignInData
+import com.example.bismillah.auth.data.SignUpData
+import com.example.bismillah.auth.presentation.viewModel.AuthState
+import com.example.bismillah.auth.presentation.viewModel.AuthView
 
 
 @Composable
-fun SigninScreen(navController: NavController, userViewModel: UserViewModel = viewModel()) {
-    val userData by userViewModel.userData.collectAsState()
+fun SigninScreen(navController: NavController, authViewModel: AuthView) {
 
+    var email by remember {
+        mutableStateOf("")
+    }
+    var password by remember {
+        mutableStateOf("")
+    }
+
+    val authState = authViewModel.authState.observeAsState()
+    val context = LocalContext.current
+
+    LaunchedEffect(authState.value) {
+        when(authState.value){
+            is AuthState.Authenticated -> navController.navigate("home")
+            is AuthState.Error -> Toast.makeText(context,
+                (authState.value as AuthState.Error).message, Toast.LENGTH_SHORT).show()
+            else -> Unit
+        }
+    }
     Box(
         modifier = Modifier
             .fillMaxSize()
-
     ) {
         Image(
             painter = painterResource(id = R.drawable.bgloginv2), // Ganti dengan resource gambar background Anda
@@ -64,7 +83,7 @@ fun SigninScreen(navController: NavController, userViewModel: UserViewModel = vi
 //            Image(
 //                painter = painterResource(id = R.drawable.robotsi),
 //                contentDescription = "Logo",
-//                modifier = Modifier.size(200.dp) // Ukuran gambar robot
+//                modifier = Modifier.size(180.dp) // Ukuran gambar robot
 //            )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -78,7 +97,7 @@ fun SigninScreen(navController: NavController, userViewModel: UserViewModel = vi
                     Text(
                         text = "Login to Your Account",
                         fontFamily = Poppins,
-                        fontSize = 16.sp,
+                        fontSize = 14.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.Black
                     )
@@ -87,12 +106,12 @@ fun SigninScreen(navController: NavController, userViewModel: UserViewModel = vi
 
                     // Email TextField
                     TextField(
-                        value = userViewModel.userData.collectAsState().value.name,
-                        onValueChange = { name ->
-                            userViewModel.updateUserData(name, userViewModel.userData.value.email, userViewModel.userData.value.password)
+                        value = email,
+                        onValueChange = {
+                            email = it
                         },
                         placeholder = {
-                            Text(text = "Email", fontFamily = Poppins, fontSize = 14.sp)
+                            Text(text = "Email", fontFamily = Poppins, fontSize = 12.sp)
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -113,12 +132,12 @@ fun SigninScreen(navController: NavController, userViewModel: UserViewModel = vi
 
                     // Password TextField
                     TextField(
-                        value = userViewModel.userData.collectAsState().value.email,
-                        onValueChange = { email ->
-                            userViewModel.updateUserData(userViewModel.userData.value.name, email, userViewModel.userData.value.password)
+                        value = password,
+                        onValueChange = {
+                            password = it
                         },
                         placeholder = {
-                            Text(text = "Password", fontFamily = Poppins, fontSize = 14.sp)
+                            Text(text = "Password", fontFamily = Poppins, fontSize = 12.sp)
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -140,16 +159,11 @@ fun SigninScreen(navController: NavController, userViewModel: UserViewModel = vi
                     // Sign In Button
                     Button(
                         onClick = {
-                            navController.navigate("home") {
-                                popUpTo(navController.graph.startDestinationId) {
-                                    saveState = true
-                                }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
+                            val signInData = SignInData(email, password)
+                            authViewModel.login(signInData)
                         },
                         colors = ButtonDefaults.buttonColors(
-                            backgroundColor = Color(0xFFFFD54F), // Warna button sesuai contoh
+                            backgroundColor = Color(0xFFFFD54F),
                             contentColor = Color.White
                         ),
                         modifier = Modifier
@@ -193,7 +207,7 @@ fun SigninScreen(navController: NavController, userViewModel: UserViewModel = vi
                             onClick = { navController.navigate("signup") },
                             contentPadding = PaddingValues(0.dp)
                         ) {
-                            Text(text = "Sign Up", color = Color.Blue, fontSize = 14.sp, fontFamily = Poppins)
+                            Text(text = "Sign Up", color = Color.Blue, fontSize = 12.sp, fontFamily = Poppins)
                         }
                     }
 
@@ -203,14 +217,14 @@ fun SigninScreen(navController: NavController, userViewModel: UserViewModel = vi
             painter = painterResource(id = R.drawable.tulisan),
             contentDescription = "TulisanLogo",
             modifier = Modifier
-                .size(80.dp)
+                .size(72.dp)
                 .align(Alignment.BottomCenter)
         )
     }
 }
 
-@Preview
-@Composable
-fun SignInPreview() {
-    SigninScreen(navController = rememberNavController())
-}
+//@Preview
+//@Composable
+//fun SignInPreview() {
+//    SigninScreen(navController = rememberNavController())
+//}
