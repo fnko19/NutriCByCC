@@ -1,5 +1,6 @@
 package com.example.bismillah.features
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -15,35 +16,56 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.bismillah.ui.theme.NaplesYellow
 import com.example.bismillah.ui.theme.SandyBrown
 import com.example.bismillah.ui.theme.White
 import com.example.bismillah.ui.theme.YaleBlue
 import com.example.bismillah.ui.theme.Grey
-import com.example.bismillah.ui.theme.Gray
 import com.example.bismillah.R
 import com.example.bismillah.ui.theme.Poppins
 import com.example.bismillah.others.BottomBar
 import androidx.navigation.NavHostController
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Scaffold
 import com.example.bismillah.ui.theme.LemonChiffon
 import androidx.compose.foundation.clickable
 import com.example.bismillah.others.Screen
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 @Composable
 fun HomeScreen(navController: NavHostController) {
+    val auth = FirebaseAuth.getInstance()
+    val firestore = FirebaseFirestore.getInstance()
+
+    var userName by remember { mutableStateOf("") }
+    var userAge by remember { mutableStateOf("") }
+    var isLoading by remember { mutableStateOf(true) }
+
+    LaunchedEffect(auth.currentUser) {
+        val user = auth.currentUser
+        user?.let {
+            userName = it.displayName ?: it.email ?: "Nama Tidak Tersedia"
+
+            val docRef = firestore.collection("users").document(it.uid)
+            docRef.get().addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    userAge = document.getString("age") ?: "Tidak ada usia"
+                } else {
+                    userAge = "Tidak ada usia"
+                }
+                isLoading = false
+            }.addOnFailureListener {
+                isLoading = false
+            }
+        }
+    }
+
     Box(
         modifier = Modifier.fillMaxSize()
-    ){
-
-        // Content on top of the background
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -51,12 +73,9 @@ fun HomeScreen(navController: NavHostController) {
                 .padding(16.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
-
         ) {
-            // Bagian profil pengguna
-            UserProfileSection()
+            UserProfileSection(userName, userAge)
 
-            // Kategori aktivitas (Tumbuh, Kembang, Vaksin)
             ActivityCategories(onCategoryClick = { category ->
                 when (category) {
                     "Tumbuh" -> navController.navigate(Screen.Tumbuh.route)
@@ -65,67 +84,55 @@ fun HomeScreen(navController: NavHostController) {
                 }
             })
 
-            // Peringatan stunting
             StuntingWarningSection()
 
             Column(
                 modifier = Modifier
-                    .verticalScroll(rememberScrollState()) // Bagian scroll dimulai dari sini
-                    .weight(1f) // Mengisi ruang yang tersisa
+                    .verticalScroll(rememberScrollState())
+                    .weight(1f)
                     .fillMaxHeight()
             ) {
-                // Aktivitas stimulasi
                 StimulationActivities()
-
-                // Jurnal harian
-                DailyJournalSection()
-
                 Spacer(modifier = Modifier.height(48.dp))
             }
         }
         Spacer(modifier = Modifier.height(32.dp))
-        // Add the BottomBar overlaying the images
         BottomBar(navController = navController, modifier = Modifier.align(Alignment.BottomCenter))
     }
 }
 
-
-
 @Composable
-fun UserProfileSection() {
+fun UserProfileSection(userName: String, userAge: String) {
     Column(modifier = Modifier
         .fillMaxWidth()
         .padding(0.dp)) {
-        // Bagian untuk Gambar Profil
-        UserProfileImage() // Memanggil fungsi terpisah untuk gambar profil
 
-        // Row untuk kedua kartu
+        UserProfileImage(userName, userAge)
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 1.dp), // Padding atas untuk jarak antara gambar dan kartu
-            horizontalArrangement = Arrangement.SpaceBetween, // Mengatur jarak antara kartu
-            verticalAlignment = Alignment.CenterVertically // Menyelaraskan konten secara vertikal
+                .padding(top = 1.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            // Card pertama untuk profil
             Card(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(end = 8.dp), // Mengisi ruang yang tersedia dan memberikan jarak antar kartu
+                    .padding(end = 8.dp),
                 shape = RoundedCornerShape(10.dp),
                 elevation = 4.dp
             ) {
                 Row(
                     modifier = Modifier.padding(9.dp),
-                    verticalAlignment = Alignment.CenterVertically, // Menyelaraskan gambar dan teks secara vertikal
+                    verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start
                 ) {
 
-                    Spacer(modifier = Modifier.width(8.dp)) // Jarak antara gambar dan teks
+                    Spacer(modifier = Modifier.width(8.dp))
 
                     Column {
                         Text(
-                            text = "Halo, Indri",
+                            text = "Halo, $userName",
                             fontFamily = Poppins,
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Bold,
@@ -140,18 +147,17 @@ fun UserProfileSection() {
                 }
             }
 
-            // Card kedua untuk informasi berat badan dan tumbuh kembang
             Card(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(start = 8.dp), // Mengisi ruang yang tersedia dan memberikan jarak antar kartu
+                    .padding(start = 8.dp),
                 shape = RoundedCornerShape(10.dp),
                 elevation = 4.dp
             ) {
                 Row(
                     modifier = Modifier.padding(9.3.dp),
-                    verticalAlignment = Alignment.CenterVertically, // Menyelaraskan teks secara vertikal
-                    horizontalArrangement = Arrangement.Start // Mengatur agar teks kanan
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start
                 ) {
                     Column(horizontalAlignment = Alignment.Start) {
                         Text(
@@ -170,47 +176,39 @@ fun UserProfileSection() {
     Spacer(modifier = Modifier.height(8.dp))
 }
 
-
 @Composable
-fun UserProfileImage() {
-    // Menggunakan Row untuk menyelaraskan gambar dan teks secara horizontal
+fun UserProfileImage(userName: String, userAge: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 8.dp), // Padding bawah untuk jarak dengan konten lain
-        verticalAlignment = Alignment.CenterVertically // Agar gambar dan teks sejajar secara vertikal
+            .padding(bottom = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        // Gambar profil dari drawable
         Image(
-            painter = painterResource(id = R.drawable.pp), // Ganti "pp" dengan nama file di drawable
+            painter = painterResource(id = R.drawable.pp),
             contentDescription = "Profile Image",
             modifier = Modifier.size(60.dp)
         )
 
-        // Spacer untuk memberikan jarak antara gambar dan teks
-        Spacer(modifier = Modifier.width(8.dp)) // Memberikan jarak horizontal antara gambar dan teks
-
-        // Kolom untuk menampilkan dua baris teks di sebelah gambar
+        Spacer(modifier = Modifier.width(8.dp))
         Column {
             Text(
-                text = "Indri",
+                text = userName,
                 fontFamily = Poppins,
-                fontSize = 16.sp, // Ukuran teks
-                fontWeight = FontWeight.Normal, // Berat font normal
-                color = Color.Black // Warna teks hitam
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Normal,
+                color = Color.Black
             )
             Text(
-                text = "0 Tahun, 6 Bulan", // Baris kedua
+                text = userAge,
                 fontFamily = Poppins,
-                fontSize = 12.sp, // Ukuran teks lebih kecil untuk baris kedua
-                fontWeight = FontWeight.Light, // Berat font lebih ringan
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Light,
                 color = Grey)
         }
         Spacer(modifier = Modifier.weight(1f))
-
     }
 }
-
 @Composable
 fun ActivityCategories(onCategoryClick: (String) -> Unit) {
     Row(
@@ -230,7 +228,7 @@ fun ActivityCategories(onCategoryClick: (String) -> Unit) {
             onClick = { onCategoryClick("Kembang") }
         )
         ActivityCategory(
-            icon = painterResource(id = R.drawable.vaksin),
+            icon = painterResource(id = R.drawable.gizi),
             title = "Cek Gizi",
             onClick = { onCategoryClick("Kalkulator") }
         )
@@ -245,8 +243,8 @@ fun ActivityCategory(icon: Painter, title: String, onClick: () -> Unit) {
             painter = icon,
             contentDescription = title,
             modifier = Modifier
-                .size(55.dp)
-                .clickable(onClick = onClick), // Menambahkan aksi klik
+                .size(100.dp)
+                .clickable(onClick = onClick),
             tint = Color.Unspecified
         )
         Text(
@@ -262,50 +260,30 @@ fun ActivityCategory(icon: Painter, title: String, onClick: () -> Unit) {
 @Composable
 fun StuntingWarningSection() {
     Card(
-        backgroundColor = SandyBrown,
+        backgroundColor = White,
         shape = RoundedCornerShape(10.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .shadow(8.dp)
+            .shadow(4.dp)
     ) {
         Column(
             modifier = Modifier.padding(10.dp)
         ) {
-            // Teks pertama
             Row(
-                modifier = Modifier.fillMaxWidth(), // Mengisi lebar maksimum
-                verticalAlignment = Alignment.CenterVertically // Sejajarkan secara vertikal
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     text = "Waspada Stunting! Kondisi ini dapat menghambat pertumbuhan dan perkembangan anak secara fisik dan kognitif. Pastikan asupan gizi tercukupi sejak dini!",
                     fontFamily = Poppins,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Bold,
-                    color = White,
+                    color = Color.Black,
                     modifier = Modifier
-                        .weight(2.5f) // Membuat teks mengisi ruang yang tersisa
-                        .fillMaxWidth(), // Mengisi lebar maksimum
-                    textAlign = TextAlign.Justify // Menyelaraskan teks
+                        .weight(2.5f)
+                        .fillMaxWidth(),
+                    textAlign = TextAlign.Justify
                 )
-                /*Button(
-                    onClick = { /* TODO: Navigate to detailed section */ },
-                    colors = ButtonDefaults.buttonColors(
-                        backgroundColor = LemonChiffon, // Warna background button
-                        contentColor = YaleBlue // Warna teks button
-                    ),
-                    modifier = Modifier
-                        .padding(12.dp)
-                        .width(80.dp) // Ganti 120.dp dengan lebar yang diinginkan
-                        .height(32.dp), // Ganti 40.dp dengan tinggi yang diinginkan
-                    contentPadding = PaddingValues(0.dp)
-                ) {
-                    Text(text = "Lihat detail",
-                        fontSize = 10.sp,
-                        fontWeight = FontWeight.Bold,
-                        fontFamily = Poppins,
-                        modifier = Modifier.padding(0.dp)
-                    )
-                }*/
             }
         }
     }
@@ -314,6 +292,39 @@ fun StuntingWarningSection() {
 
 @Composable
 fun StimulationActivities() {
+    val activities = listOf(
+        "Ajak anak bermain menumpuk balok untuk melatih motorik halus",
+        "Perkenalkan anak pada berbagai suara, seperti suara burung, musik",
+        "Bantu anak belajar mengguling ke depan dan ke belakang",
+        "Dorong anak untuk meraih mainan yang dipegang di atas kepala atau di depan mereka",
+        "Ajak anak bermain dengan mainan bertekstur (bola berbulu atau mainan empuk)",
+        "Mainkan permainan ciluk-ba untuk membangun pemahaman anak tentang objek yang tidak terlihat",
+        "Biarkan anak merangkak di atas permukaan berbeda",
+        "Ajak anak melihat wajahnya di cermin kecil, biarkan dia mengenali bayangannya sendiri",
+        "Bermain sambil bernyanyi dan bertepuk tangan bersama anak agar ia belajar mengikuti irama dan kata-kata",
+        "Bacakan buku dengan gambar berwarna-warni, ajak anak menunjukkan atau menyebutkan benda-benda di dalamnya"
+    )
+
+    val checkboxStates = remember { mutableStateListOf(*List(activities.size) { false }.toTypedArray()) }
+
+    LaunchedEffect(Unit) {
+        loadCheckboxStates { states ->
+            checkboxStates.clear()
+            checkboxStates.addAll(states)
+        }
+    }
+
+    activities.forEachIndexed { index, activity ->
+        StimulationActivity(
+            activity = activity,
+            isChecked = checkboxStates[index],
+            onCheckedChange = { isChecked ->
+                checkboxStates[index] = isChecked
+                saveCheckboxStates(checkboxStates)
+            }
+        )
+    }
+
     Column {
         Text(
             text = "Kegiatan Stimulasi",
@@ -322,33 +333,23 @@ fun StimulationActivities() {
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(8.dp))
-
-        StimulationActivity(
-            activity = "Ajak Indri bermain menumpuk balok untuk melatih motorik halus"
-        )
-        StimulationActivity(
-            activity = "Perkenalkan Indri pada berbagai suara, seperti suara burung, musik"
-        )
-        StimulationActivity(
-            activity = "Bantu Indri belajar mengguling ke depan dan ke belakang"
-        )
     }
     Spacer(modifier = Modifier.height(16.dp))
 }
 
 @Composable
-fun StimulationActivity(activity: String) {
+fun StimulationActivity(activity: String, isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
     Card(
-        backgroundColor = LemonChiffon , // Warna oranye
-        shape = RoundedCornerShape(0.dp), // Menambahkan sudut yang melengkung
+        backgroundColor = LemonChiffon,
+        shape = RoundedCornerShape(0.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 6.dp) // Memberikan padding vertikal antar Card
+            .padding(vertical = 6.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(5.dp), // Memberikan padding di dalam Card
+                .padding(5.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -358,34 +359,58 @@ fun StimulationActivity(activity: String) {
                 fontFamily = Poppins,
                 fontSize = 12.sp
             )
-            Checkbox(checked = false, onCheckedChange = {})
+            Checkbox(
+                checked = isChecked,
+                onCheckedChange = onCheckedChange
+            )
         }
     }
 }
 
 
-@Composable
-fun DailyJournalSection() {
-    Card(
-        shape = RoundedCornerShape(10.dp),
-        modifier = Modifier.fillMaxWidth(),
-        backgroundColor = White,
-    ){
-        Column(modifier = Modifier.padding(10.dp)) {
-            Text(text = "Jurnal Harian Perkembangan Anak",  fontFamily = Poppins, fontSize = 14.sp, fontWeight = FontWeight.Bold)
-            Spacer(modifier = Modifier.height(10.dp))
-            Card(
-                shape = RoundedCornerShape(10.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Column(modifier = Modifier.padding(12.dp)) {
-                    Text(text = "09 Oktober 2024", fontFamily = Poppins, fontSize = 12.sp, fontWeight = FontWeight.Bold)
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "• Hari ini Indri mulai merangkak untuk pertama kali!", fontFamily = Poppins, fontSize = 12.sp)
-                    Text(text = "• Indri mengucapkan kata pertamanya, \"Papa!\"", fontFamily = Poppins, fontSize = 12.sp)
-                    Text(text = "• Hari ini Indri berdiri sendiri dengan berpegangan pada meja", fontFamily = Poppins, fontSize = 12.sp)
-                }
+fun saveCheckboxStates(checkboxStates: List<Boolean>) {
+    val currentUser = FirebaseAuth.getInstance().currentUser
+    val firestore = FirebaseFirestore.getInstance()
+
+    currentUser?.let { user ->
+        firestore.collection("users")
+            .document(user.uid)
+            .collection("checkboxStates")
+            .document("states")
+            .set(mapOf("checkboxStates" to checkboxStates))
+            .addOnSuccessListener {
+                Log.d("Firestore", "Checkbox states saved successfully")
             }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Error saving checkbox states: ${e.message}")
+            }
+    }
+}
+
+fun loadCheckboxStates(onLoaded: (List<Boolean>) -> Unit) {
+    val currentUser = FirebaseAuth.getInstance().currentUser
+    val firestore = FirebaseFirestore.getInstance()
+
+    currentUser?.let { user ->
+        val docRef = firestore.collection("users")
+            .document(user.uid)
+            .collection("checkboxStates")
+            .document("states")
+
+        docRef.get().addOnSuccessListener { document ->
+            if (document.exists()) {
+                val states = document.get("checkboxStates") as? List<Boolean>
+                if (states != null) {
+                    onLoaded(states)
+                } else {
+                    onLoaded(List(10) { false })
+                }
+            } else {
+                onLoaded(List(10) { false })
+            }
+        }.addOnFailureListener { e ->
+            Log.e("Firestore", "Error loading checkbox states: ${e.message}")
+            onLoaded(List(10) { false })
         }
     }
 }

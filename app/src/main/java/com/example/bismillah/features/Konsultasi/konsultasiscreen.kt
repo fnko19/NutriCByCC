@@ -41,8 +41,6 @@ import androidx.navigation.compose.rememberNavController
 import com.example.bismillah.others.BottomBar
 import com.example.bismillah.ui.theme.Poppins
 import com.example.bismillah.R
-import com.example.bismillah.features.DailyJournalSection
-import com.example.bismillah.features.StimulationActivities
 import com.example.bismillah.others.Screen
 
 @Composable

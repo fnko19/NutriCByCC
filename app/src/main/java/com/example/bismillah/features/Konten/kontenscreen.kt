@@ -34,6 +34,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.bismillah.others.BottomBar
@@ -42,29 +45,44 @@ import androidx.navigation.compose.rememberNavController
 import com.example.bismillah.R
 import com.example.bismillah.others.Screen
 import com.example.bismillah.ui.theme.NaplesYellow
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 @Composable
 fun KontenScreen(navController: NavHostController) {
+    val auth = FirebaseAuth.getInstance()
+    var userName by remember { mutableStateOf("") }
+    var isLoading by remember { mutableStateOf(true) }
+
+    LaunchedEffect(auth.currentUser) {
+        val user = auth.currentUser
+        user?.let {
+            userName = it.displayName ?: it.email ?: "Nama Tidak Tersedia"
+            isLoading = false
+        } ?: run {
+            userName = "Pengguna tidak terdaftar"
+            isLoading = false
+        }
+    }
+
     Scaffold(
         bottomBar = {
             BottomBar(navController = navController)
         }
     ) { innerPadding ->
-        // Main content of the Konten screen
-        var searchQuery by remember { mutableStateOf("") } // State for search input
-        var selectedCategory by remember { mutableStateOf("Sarapan") } // State for selected category
-        var isLoading by remember { mutableStateOf(false) } // State for loading status
+        var searchQuery by remember { mutableStateOf("") }
+        var selectedCategory by remember { mutableStateOf("Sarapan") }
+        var isLoading by remember { mutableStateOf(false) }
 
-        // Use verticalScroll to make the content scrollable
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())  // Make the content scrollable
+                .verticalScroll(rememberScrollState())
                 .padding(innerPadding)
-                .padding(top = 48.dp, start = 18.dp, end = 18.dp, bottom = 64.dp)  // Add padding at the bottom to prevent content from being hidden by BottomBar
+                .padding(top = 20.dp, start = 18.dp, end = 18.dp, bottom = 64.dp)
         ) {
-            // Title
-            androidx.compose.material3.Text(
+
+            Text(
                 text = "Resep",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
@@ -78,8 +96,8 @@ fun KontenScreen(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            androidx.compose.material3.Text(
-                text = "Haloo mama Indri! \nMau masak apa hari ini? ",
+            Text(
+                text = "Haloo mamanya $userName! \nMau masak apa hari ini? ",
                 fontSize = 14.sp,
                 fontFamily = Poppins,
                 color = Color(0xFF0D3B66),
@@ -89,14 +107,12 @@ fun KontenScreen(navController: NavHostController) {
                 textAlign = TextAlign.Left
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
-            // Search Field
-            SearchField(searchQuery = searchQuery, onSearchQueryChange = { searchQuery = it })
+
+            SearchBar()
 
             Spacer(modifier = Modifier.height(24.dp))
-
-            // Categories
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -108,12 +124,10 @@ fun KontenScreen(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Loading indicator
             if (isLoading) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
             }
 
-            // Horizontal Scroll for Menu Cards
             LazyRow(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -147,41 +161,30 @@ fun KontenScreen(navController: NavHostController) {
                     }
                 }
             }
-            Spacer(modifier = Modifier.height(24.dp)) // Add space at the end to avoid content being hidden by BottomBar
+            Spacer(modifier = Modifier.height(24.dp))
         }
     }
 }
 
 
 @Composable
-fun SearchField(searchQuery: String, onSearchQueryChange: (String) -> Unit) {
-    Row(
+fun SearchBar() {
+    var searchText by remember { mutableStateOf("") }
+    OutlinedTextField(
+        value = searchText,
+        onValueChange = { searchText = it },
+        placeholder = { Text(text = "Cari resep", fontFamily = Poppins, fontSize = 14.sp, color = Color.Black) },
         modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        TextField(
-            value = searchQuery,
-            onValueChange = onSearchQueryChange,
-            placeholder = {
-                androidx.compose.material3.Text("Cari Resep", fontFamily = Poppins, fontSize = 14.sp, color = Color(0xFF0D3B66))
-            },
-            modifier = Modifier
-                .shadow(1.dp, RoundedCornerShape(8.dp))
-                .height(52.dp)
-                .fillMaxWidth()
-                .background(Color(0x20FFF0E3), RoundedCornerShape(8.dp)),
-            shape = RoundedCornerShape(8.dp),
-            textStyle = TextStyle(color = Color.Black),
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.search),
-                    contentDescription = "Search Icon",
-                    tint = Color.Black,
-                    modifier = Modifier.size(24.dp)
-                )
-            }
-        )
-    }
+        shape = RoundedCornerShape(8.dp),
+        leadingIcon = {
+            Icon(
+                painter = painterResource(id = R.drawable.search),
+                contentDescription = "Search Icon",
+                tint = Color.Black,
+                modifier = Modifier.size(20.dp)
+            )
+        }
+    )
 }
 
 @Composable
@@ -189,7 +192,7 @@ fun RecipeCategoryCard(title: String, imageRes: Int) {
     Card(
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
-            .size(100.dp)
+            .size(90.dp)
             .shadow(2.dp, RoundedCornerShape(8.dp)),
         colors = CardDefaults.cardColors(containerColor = Color(0xFFFFF9E1))
     ) {
@@ -231,14 +234,14 @@ fun MenuCard(
             .height(320.dp)
             .width(194.dp)
             .shadow(4.dp, RoundedCornerShape(8.dp)),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFED974C))
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5))
     ) {
         Column {
             Image(
                 painter = painterResource(id = imageRes),
                 contentDescription = "Menu",
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.height(200.dp)
+                modifier = Modifier.height(180.dp)
             )
             androidx.compose.material3.Text(
                 foodName,
@@ -246,7 +249,7 @@ fun MenuCard(
                 fontFamily = poppinsFamily,
                 modifier = Modifier.padding(8.dp),
                 textAlign = TextAlign.Center,
-                color = Color.White
+                color = Color.Black
             )
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -256,7 +259,7 @@ fun MenuCard(
             ) {
                 androidx.compose.material3.Text(babyAge,
                     fontFamily = poppinsFamily,
-                    color = Color.White,
+                    color = Color.Black,
                     fontSize = 12.sp)
             }
             Button(

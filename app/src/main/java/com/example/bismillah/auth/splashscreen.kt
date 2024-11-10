@@ -35,11 +35,11 @@ fun SplashScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(NaplesYellow)
+            .background(Color.White)
             .padding(16.dp),
         contentAlignment = Alignment.Center
     ) {
-        val image: Painter = painterResource(id = R.drawable.logo)
+        val image: Painter = painterResource(id = R.drawable.logokotak)
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
@@ -48,15 +48,15 @@ fun SplashScreen(navController: NavController) {
                 painter = image,
                 contentDescription = "App Logo",
                 modifier = Modifier
-                    .size(200.dp)
+                    .size(160.dp)
                     .padding(bottom = 16.dp)
             )
 
             CircularProgressIndicator(
-                color = Color.White,
+                color = Color.Black,
                 strokeWidth = 4.dp,
                 modifier = Modifier
-                    .size(50.dp)
+                    .size(30.dp)
                     .background(Color.Transparent, CircleShape)
             )
         }

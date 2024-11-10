@@ -65,6 +65,7 @@ dependencies {
     implementation ("androidx.navigation:navigation-compose:2.6.0")
     implementation ("androidx.navigation:navigation-compose:2.6.0-alpha01")
     implementation ("com.google.firebase:firebase-auth:21.0.1")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
