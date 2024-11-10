@@ -47,7 +47,6 @@ import com.google.firebase.storage.FirebaseStorage
 
 @Composable
 fun profileScreen(navController: NavHostController, authViewModel: AuthView) {
-    //val context = LocalContext.current
     val auth = FirebaseAuth.getInstance()
     val user = auth.currentUser
     val firestore = FirebaseFirestore.getInstance()
@@ -61,7 +60,6 @@ fun profileScreen(navController: NavHostController, authViewModel: AuthView) {
     var age by remember { mutableStateOf("") }
     var profileImageUrl by remember { mutableStateOf(user?.photoUrl?.toString() ?: "") }
 
-    // Fetch additional profile data from Firestore
     LaunchedEffect(user) {
         user?.let {
             firestore.collection("users").document(it.uid).get()
@@ -75,18 +73,16 @@ fun profileScreen(navController: NavHostController, authViewModel: AuthView) {
                     }
                 }
                 .addOnFailureListener {
-                    // Handle any errors (e.g., document not found)
+
                 }
         }
     }
 
-    // Image picker intent
     val pickImageLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
             val storageRef = storage.reference.child("profileImages/${user?.uid}.jpg")
             storageRef.putFile(uri)
                 .addOnSuccessListener {
-                    // Berhasil mengunggah gambar
                     storageRef.downloadUrl.addOnSuccessListener { downloadUrl ->
                         profileImageUrl = downloadUrl.toString()
                         firestore.collection("users").document(user!!.uid).update("profileImageUrl", profileImageUrl)
@@ -118,7 +114,6 @@ fun profileScreen(navController: NavHostController, authViewModel: AuthView) {
                 .background(Color(0xFFF5F5F5)),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Profile Image
             AsyncImage(
                 model = profileImageUrl.ifEmpty { R.drawable.profil2 },
                 contentDescription = "Profile Picture",
@@ -130,7 +125,6 @@ fun profileScreen(navController: NavHostController, authViewModel: AuthView) {
                 contentScale = ContentScale.Crop
             )
 
-            // Username
             Text(
                 text = username,
                 fontSize = 20.sp,
@@ -138,28 +132,24 @@ fun profileScreen(navController: NavHostController, authViewModel: AuthView) {
                 modifier = Modifier.padding(top = 8.dp)
             )
 
-            // Age input
             ProfileInputField(
                 label = "Usia",
                 value = age,
                 onValueChange = { age = it }
             )
 
-            // Editable Birth Date Field
             ProfileInputField(
                 label = "Tanggal lahir",
                 value = birthDate,
                 onValueChange = { birthDate = it }
             )
 
-            // Editable Father's Name Field
             ProfileInputField(
                 label = "Ayah",
                 value = fatherName,
                 onValueChange = { fatherName = it }
             )
 
-            // Editable Mother's Name Field
             ProfileInputField(
                 label = "Ibu",
                 value = motherName,
@@ -197,8 +187,8 @@ fun profileScreen(navController: NavHostController, authViewModel: AuthView) {
             // Log Out Button
             Button(
                 onClick = {
-                    auth.signOut()
-                    navController.navigate("signin")
+                    authViewModel.signOut(navController)
+                    //auth.signOut()
                 },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFFFC107)),
                 modifier = Modifier

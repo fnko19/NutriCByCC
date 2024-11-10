@@ -29,6 +29,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
 import com.example.bismillah.others.Screen
+import kotlinx.coroutines.delay
 
 @Composable
 fun StartScreen(navController: NavController) {
@@ -36,7 +37,7 @@ fun StartScreen(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .background(color = Color.White)
-            .padding(top = 72.dp, start = 16.dp, end = 16.dp),
+            .padding(top = 72.dp, start = 20.dp, end = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -62,13 +63,13 @@ fun StartScreen(navController: NavController) {
 
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(36.dp))
 
         Image(
             painter = painterResource(id = R.drawable.robot),
             contentDescription = "Descriptive content for the image",
             modifier = Modifier
-                .size(312.dp)
+                .size(300.dp)
                 .padding(bottom = 16.dp)
         )
 

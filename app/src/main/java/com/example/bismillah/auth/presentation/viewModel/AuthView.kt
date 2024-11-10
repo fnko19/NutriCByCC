@@ -105,6 +105,7 @@ class AuthView : ViewModel() {
     }
 
     fun signOut(navController: NavController){
+        navController.navigate("signIn")
         auth.signOut()
         _authState.value = AuthState.Unauthenticated
     }
