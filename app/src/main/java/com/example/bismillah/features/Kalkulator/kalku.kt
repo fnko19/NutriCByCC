@@ -9,7 +9,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,7 +22,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.bismillah.R
 import com.example.bismillah.ui.theme.Poppins
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
@@ -47,13 +45,12 @@ fun nutritionStatusCalculator(navController: NavHostController) {
         ) {
             Column(
                 modifier = Modifier
-                    .padding(16.dp)
+                    .padding(top = 40.dp, start = 20.dp, end = 20.dp)
                     .fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.Start
             ) {
                 Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Start
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
@@ -63,7 +60,7 @@ fun nutritionStatusCalculator(navController: NavHostController) {
                             tint = Color.Black
                         )
                     }
-                    Spacer(modifier = Modifier.width(16.dp))
+                    Spacer(modifier = Modifier.width(40.dp))
                     Text(
                         text = "Index Massa Tubuh",
                         fontSize = 18.sp,
@@ -73,18 +70,25 @@ fun nutritionStatusCalculator(navController: NavHostController) {
                         modifier = Modifier.padding(vertical = 16.dp)
                     )
                 }
+                Spacer(modifier = Modifier.height(20.dp))
 
+                Column(
+                    modifier = Modifier
+                        .width(400.dp)
+                        .height(190.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ){
                 Image(
                     painter = painterResource(id = R.drawable.imtrobot),
                     contentDescription = "Food Image",
                     modifier = Modifier
-                        .height(190.dp)
-                        .width(230.dp)
-                        .padding(start = 32.dp)
+                        .height(160.dp)
+                        .width(200.dp)
                         .clip(RoundedCornerShape(8.dp)),
                     contentScale = ContentScale.Fit,
                     alignment = Alignment.Center
                 )
+                Spacer(modifier = Modifier.height(32.dp))}
 
                 Column(
                     modifier = Modifier
@@ -124,7 +128,6 @@ fun nutritionStatusCalculator(navController: NavHostController) {
                         }
                     }
 
-                    // Age Input
                     CardInputField(label = "Umur (bulan)") {
                         TextField(
                             value = age,
@@ -136,7 +139,6 @@ fun nutritionStatusCalculator(navController: NavHostController) {
                         )
                     }
 
-                    // Weight Input
                     CardInputField(label = "Berat Badan (kg)") {
                         TextField(
                             value = weight,
@@ -148,7 +150,6 @@ fun nutritionStatusCalculator(navController: NavHostController) {
                         )
                     }
 
-                    // Height Input
                     CardInputField(label = "Tinggi Badan (cm)") {
                         TextField(
                             value = height,
@@ -160,7 +161,6 @@ fun nutritionStatusCalculator(navController: NavHostController) {
                         )
                     }
 
-                    // Calculate Button
                     Button(
                         onClick = {
                             result = calculateNutritionStatus(gender, age, weight, height)
@@ -168,7 +168,7 @@ fun nutritionStatusCalculator(navController: NavHostController) {
                         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFFFC107)),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 16.dp)
+                            .padding(vertical = 20.dp)
                     ) {
                         Text("Konsultasi sekarang", color = Color.Black, fontWeight = FontWeight.Bold)
                     }
@@ -237,8 +237,6 @@ fun CardInputField(label: String, content: @Composable () -> Unit) {
 fun calculateNutritionStatus(gender: String, age: String, weight: String, height: String): String {
     val weightKg = weight.toDoubleOrNull() ?: return "Input berat badan tidak valid"
     val heightCm = height.toDoubleOrNull() ?: return "Input tinggi badan tidak valid"
-
-    // Calculate BMI
     val bmi = weightKg / ((heightCm / 100) * (heightCm / 100))
 
     return when (gender) {

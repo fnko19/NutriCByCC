@@ -43,7 +43,7 @@ fun StartScreen(navController: NavController) {
     ) {
         Text(
             text = "Siap mencegah stunting?",
-            fontSize = 20.sp,
+            fontSize = 16.sp,
             fontFamily = Poppins,
             fontWeight = FontWeight.Bold,
             color = Color.Black,
@@ -51,7 +51,7 @@ fun StartScreen(navController: NavController) {
 
         )
 
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
         Text(
             text = "Let's Go!!",
@@ -69,7 +69,7 @@ fun StartScreen(navController: NavController) {
             painter = painterResource(id = R.drawable.robot),
             contentDescription = "Descriptive content for the image",
             modifier = Modifier
-                .size(300.dp)
+                .size(280.dp)
                 .padding(bottom = 16.dp)
         )
 
@@ -84,8 +84,8 @@ fun StartScreen(navController: NavController) {
             ),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(48.dp)
-                .shadow(4.dp, shape = RoundedCornerShape(8.dp))
+                .height(44.dp)
+                .shadow(2.dp, shape = RoundedCornerShape(8.dp))
         ) {
             Text(
                 text = "Mulai Sekarang",

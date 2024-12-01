@@ -12,20 +12,29 @@ import com.example.bismillah.auth.StartScreen
 import com.example.bismillah.auth.presentation.viewModel.AuthView
 import com.example.bismillah.features.HomeScreen
 import com.example.bismillah.features.Kalkulator.nutritionStatusCalculator
-import com.example.bismillah.features.Konsultasi.Spesialis.spesialisAnakPage
-import com.example.bismillah.features.Konsultasi.Spesialis.spesialisGizi
+import com.example.bismillah.features.Konsultasi.Spesialis.Anak.spesialisAnakPage
+import com.example.bismillah.features.Konsultasi.Spesialis.Gizi.spesialisGizi
 import com.example.bismillah.features.Konsultasi.konsultasiScreen
 import com.example.bismillah.features.Konten.KontenScreen
 import com.example.bismillah.features.Konten.MiePage
 import com.example.bismillah.features.Konten.PopSiclePage
 import com.example.bismillah.features.Konten.sushiPage
-import com.example.bismillah.features.PerkembanganScreen
-import com.example.bismillah.features.PertumbuhanScreen
-import com.example.bismillah.features.VaksinScreen
+import com.example.bismillah.features.Perkembangan.PerkembanganScreen
+import com.example.bismillah.features.Pertumbuhan.PertumbuhanScreen
+//import com.example.bismillah.features.VaksinScreen
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.setValue
-import com.example.bismillah.features.profileScreen
+import com.example.bismillah.features.Pertumbuhan.AddGrowthScreen
+import com.example.bismillah.features.Konsultasi.Spesialis.Anak.DickyPage
+import com.example.bismillah.features.Konsultasi.Spesialis.Anak.MayaPage
+import com.example.bismillah.features.Konsultasi.Spesialis.Anak.PaulPage
+import com.example.bismillah.features.Konsultasi.Spesialis.Anak.StellaPage
+import com.example.bismillah.features.Konsultasi.Spesialis.Anak.SylviaPage
+import com.example.bismillah.features.Konsultasi.Spesialis.Gizi.JonathanPage
+import com.example.bismillah.features.Konsultasi.Spesialis.Gizi.MarianaPage
+import com.example.bismillah.features.Konsultasi.Spesialis.Gizi.MichellePage
+import com.example.bismillah.features.Konsultasi.Spesialis.Gizi.OliviaPage
+import com.example.bismillah.features.Konsultasi.Spesialis.Gizi.VikaPage
+import com.example.bismillah.features.Profil.profileScreen
 
 @Composable
 fun NavGraph(navController: NavHostController, authViewModel: AuthView){
@@ -59,9 +68,6 @@ fun NavGraph(navController: NavHostController, authViewModel: AuthView){
         composable(Screen.Kembang.route){
             PerkembanganScreen(navController)
         }
-        composable(Screen.Vaksin.route){
-            VaksinScreen(navController)
-        }
         composable(Screen.Sushi.route){
             sushiPage(navController)
         }
@@ -83,7 +89,39 @@ fun NavGraph(navController: NavHostController, authViewModel: AuthView){
         composable(Screen.Kalkulator.route){
             nutritionStatusCalculator(navController)
         }
-
+        composable(Screen.TambahTumbuh.route){
+            AddGrowthScreen(navController)
+        }
+        composable(Screen.Vika.route) {
+            VikaPage(navController)
+        }
+        composable(Screen.Michelle.route) {
+            MichellePage(navController)
+        }
+        composable(Screen.Jonathan.route) {
+            JonathanPage(navController)
+        }
+        composable(Screen.Olivia.route) {
+            OliviaPage(navController)
+        }
+        composable(Screen.Mariana.route) {
+            MarianaPage(navController)
+        }
+        composable(Screen.Stella.route){
+            StellaPage(navController)
+        }
+        composable(Screen.Paul.route){
+            PaulPage(navController)
+        }
+        composable(Screen.Maya.route){
+            MayaPage(navController)
+        }
+        composable(Screen.Dicky.route){
+            DickyPage(navController)
+        }
+        composable(Screen.Sylvia.route){
+            SylviaPage(navController)
+        }
     }
 }
 
@@ -99,11 +137,27 @@ sealed class Screen(val route: String) {
     data object Profil : Screen ("profil")
     data object Tumbuh : Screen("tumbuh")   // Rute baru
     data object Kembang : Screen("kembang")   // Rute baru
-    data object Vaksin : Screen("vaksin")
+    //data object Vaksin : Screen("vaksin")
     data object Sushi : Screen("sushi")
     data object Popsicle : Screen("Popsicle")
     data object Mie : Screen("mie")
     data object SpesialisAnak : Screen("spesialisAnak")
     data object SpesialisGizi : Screen("spesialisGizi")
     data object Kalkulator : Screen("kalkulator")
+    data object TambahTumbuh : Screen("tambahTumbuh")
+
+    //data object list dokter gizi
+    data object Vika : Screen("vikaPage")
+    data object Michelle : Screen("michellePage")
+    data object Jonathan : Screen("jonathanPage")
+    data object Olivia : Screen("oliviaPage")
+    data object Mariana : Screen("marianaPage")
+
+    //data object list dokter anak
+    data object Stella : Screen("stellaPage")
+    data object Paul : Screen("paulPage")
+    data object Maya : Screen("mayaPage")
+    data object Dicky : Screen("dickyPage")
+    data object Sylvia : Screen("sylviaPage")
+
 }
