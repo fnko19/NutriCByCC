@@ -1,6 +1,7 @@
-package com.example.bismillah.features.Konsultasi.Spesialis
+package com.example.bismillah.features.Konsultasi.Spesialis.Anak
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -41,6 +42,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.bismillah.R
+import com.example.bismillah.features.Konsultasi.Spesialis.Gizi.GiziCard
+import com.example.bismillah.others.Screen
 import com.example.bismillah.ui.theme.Poppins
 
 @Composable
@@ -91,29 +94,39 @@ fun spesialisAnakPage(navController: NavController) {
                 .fillMaxHeight()
             ) {
                 AnakCard(
+                    navController = navController,
                     imageRes = R.drawable.anak1,
-                    name = "dr. Stella Ananda, Sp.A, IBCLC, CIMI",
-                    hospital = "RSUP Dr. Tadjuddin Chalid"
+                    name = "dr. Vika Pramesti, Sp.GK, MPH, RD",
+                    hospital = "RSUP dr. Wahidin Sudirohusodo",
+                    route = Screen.Stella.route,
                 )
                 AnakCard(
+                    navController = navController,
                     imageRes = R.drawable.anak2,
-                    name = "Prof. dr. Paul Martinus, Sp.A(K), DTM&H, MCTM(TP)",
-                    hospital = "Rumah Sakit Umum Pusat dr. Wahidin Sudirohusodo"
+                    name = "dr. Vika Pramesti, Sp.GK, MPH, RD",
+                    hospital = "RSUP dr. Wahidin Sudirohusodo",
+                    route = Screen.Paul.route,
                 )
                 AnakCard(
+                    navController = navController,
                     imageRes = R.drawable.anak3,
-                    name = "dr. Maya Salsabila, Sp.A, M.Sc, CIMI",
-                    hospital = "Rumah Sakit Universitas Hasanuddin"
+                    name = "dr. Vika Pramesti, Sp.GK, MPH, RD",
+                    hospital = "RSUP dr. Wahidin Sudirohusodo",
+                    route = Screen.Maya.route,
                 )
                 AnakCard(
+                    navController = navController,
                     imageRes = R.drawable.anak4,
-                    name = "dr. Dicky Kurniawan, Sp.A, FAAP, CIMI",
-                    hospital = "Rumah Sakit Umum Pusat dr. Wahidin Sudirohusodo"
+                    name = "dr. Vika Pramesti, Sp.GK, MPH, RD",
+                    hospital = "RSUP dr. Wahidin Sudirohusodo",
+                    route = Screen.Dicky.route,
                 )
                 AnakCard(
+                    navController = navController,
                     imageRes = R.drawable.anak5,
-                    name = "dr. Sylvia Kusuma, Sp.A, MPH, IBCLC",
-                    hospital = "Rumah Sakit Siloam Makassar"
+                    name = "dr. Vika Pramesti, Sp.GK, MPH, RD",
+                    hospital = "RSUP dr. Wahidin Sudirohusodo",
+                    route = Screen.Sylvia.route,
                 )
                 Spacer(modifier = Modifier.height(24.dp))
             }
@@ -148,19 +161,17 @@ fun SearchBarAnak() {
 }
 
 @Composable
-fun AnakCard(imageRes: Int, name: String, hospital: String) {
+fun AnakCard(navController: NavController, imageRes: Int, name: String, hospital: String,  route: String ) {
     Card(
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 10.dp),
+            .padding(vertical = 8.dp)
+            .clickable { navController.navigate(route) },
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White) // Set card color to white
+        colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(16.dp)
-        ) {
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(16.dp)) {
             Image(
                 painter = painterResource(id = imageRes),
                 contentDescription = null,
@@ -169,11 +180,10 @@ fun AnakCard(imageRes: Int, name: String, hospital: String) {
                     .clip(RoundedCornerShape(8.dp)),
                 contentScale = ContentScale.Crop
             )
-            Spacer(modifier = Modifier.width(20.dp))
+            Spacer(modifier = Modifier.width(16.dp))
             Column {
-                Text(text = name, fontWeight = FontWeight.Bold, fontFamily = Poppins, fontSize = 14.sp, color = Color.Black)
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(text = hospital, fontSize = 12.sp, fontFamily = Poppins, color = Color.Gray)
+                Text(text = name, fontWeight = FontWeight.Bold, fontSize = 16.sp, color = Color.Black)
+                Text(text = hospital, fontSize = 14.sp, color = Color.Gray)
             }
         }
     }

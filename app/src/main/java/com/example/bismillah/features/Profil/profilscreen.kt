@@ -1,4 +1,4 @@
-package com.example.bismillah.features
+package com.example.bismillah.features.Profil
 
 import android.net.Uri
 import android.util.Log
@@ -18,7 +18,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -27,18 +26,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
-import coil.compose.rememberImagePainter
 import com.example.bismillah.R
 import com.example.bismillah.auth.presentation.viewModel.AuthView
 import com.example.bismillah.others.BottomBar
@@ -109,16 +100,15 @@ fun profileScreen(navController: NavHostController, authViewModel: AuthView) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
-                .padding(innerPadding)
-                .background(Color(0xFFF5F5F5)),
+                .padding(top = 40.dp, start = 16.dp, end = 20.dp)
+                .padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AsyncImage(
                 model = profileImageUrl.ifEmpty { R.drawable.profil2 },
                 contentDescription = "Profile Picture",
                 modifier = Modifier
-                    .size(100.dp)
+                    .size(80.dp)
                     .clip(CircleShape)
                     .background(Color.Gray)
                     .clickable { pickImageLauncher.launch("image/*") },
@@ -127,7 +117,7 @@ fun profileScreen(navController: NavHostController, authViewModel: AuthView) {
 
             Text(
                 text = username,
-                fontSize = 20.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(top = 8.dp)
             )

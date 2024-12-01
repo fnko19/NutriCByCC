@@ -1,6 +1,7 @@
-package com.example.bismillah.features.Konsultasi.Spesialis
+package com.example.bismillah.features.Konsultasi.Spesialis.Gizi
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -42,6 +43,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.bismillah.ui.theme.Poppins
 import com.example.bismillah.R
+import com.example.bismillah.others.Screen
 
 @Composable
 fun spesialisGizi(navController: NavController) {
@@ -87,29 +89,39 @@ fun spesialisGizi(navController: NavController) {
                 .fillMaxHeight()
             ) {
                 GiziCard(
+                    navController = navController,
                     imageRes = R.drawable.gizi1,
-                    name = "dr. Mariana Komogi, Sp.GK., M.Clin.Med",
-                    hospital = "Rumah Sakit Siloam Makassar"
-                )
-                GiziCard(
-                    imageRes = R.drawable.gizi2,
-                    name = "dr. Michelle Kartika Thompson, Sp.GK, IBCLC, MSc",
-                    hospital = "Rumah Sakit Siloam Makassar"
-                )
-                GiziCard(
-                    imageRes = R.drawable.gizi3,
-                    name = "dr. Jonathan Aditya Patel, Sp.GK, RD, IBCLC",
-                    hospital = "RSUP Dr. Tadjuddin Chalid"
-                )
-                GiziCard(
-                    imageRes = R.drawable.gizi4,
-                    name = "dr. Olivia Rahma Spencer, Sp.GK, RD, MSc",
-                    hospital = "RSUP Dr. Tadjuddin Chalid"
-                )
-                GiziCard(
-                    imageRes = R.drawable.gizi5,
                     name = "dr. Vika Pramesti, Sp.GK, MPH, RD",
-                    hospital = "Rumah Sakit Umum Pusat dr. Wahidin Sudirohusodo"
+                    hospital = "RSUP dr. Wahidin Sudirohusodo",
+                    route = Screen.Vika.route,
+                )
+                GiziCard(
+                    navController = navController,
+                    imageRes = R.drawable.gizi2,
+                    name = "dr. Mariana Komogi, Sp.GK., M.Clin.Med",
+                    hospital = "RS Siloam Makassar",
+                    route = Screen.Mariana.route,
+                )
+                GiziCard(
+                    navController = navController,
+                    imageRes = R.drawable.gizi4,
+                    name = "dr. Michelle Kartika Thompson, Sp.GK, MSc",
+                    hospital = "RS Siloam Makassar",
+                    route = Screen.Michelle.route,
+                )
+                GiziCard(
+                    navController = navController,
+                    imageRes = R.drawable.gizi3,
+                    name = "dr. Jonathan Andika, Sp.GK",
+                    hospital = "RS Premier Surabaya",
+                    route = Screen.Jonathan.route,
+                )
+                GiziCard(
+                    navController = navController,
+                    imageRes = R.drawable.gizi5,
+                    name = "dr. Olivia Santoso, Sp.GK",
+                    hospital = "RS Mitra Keluarga Jakarta",
+                    route = Screen.Vika.route,
                 )
                 Spacer(modifier = Modifier.height(24.dp))
             }
@@ -137,19 +149,17 @@ fun SearchBarGizi() {
 }
 
 @Composable
-fun GiziCard(imageRes: Int, name: String, hospital: String) {
+fun GiziCard(navController: NavController, imageRes: Int, name: String, hospital: String,  route: String ) {
     Card(
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 10.dp),
+            .padding(vertical = 8.dp)
+            .clickable { navController.navigate(route) },
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White) // Set card color to white
+        colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(16.dp)
-        ) {
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(16.dp)) {
             Image(
                 painter = painterResource(id = imageRes),
                 contentDescription = null,
@@ -158,11 +168,10 @@ fun GiziCard(imageRes: Int, name: String, hospital: String) {
                     .clip(RoundedCornerShape(8.dp)),
                 contentScale = ContentScale.Crop
             )
-            Spacer(modifier = Modifier.width(20.dp))
+            Spacer(modifier = Modifier.width(16.dp))
             Column {
-                Text(text = name, fontWeight = FontWeight.Bold, fontFamily = Poppins, fontSize = 14.sp, color = Color.Black)
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(text = hospital, fontSize = 12.sp, fontFamily = Poppins, color = Color.Gray)
+                Text(text = name, fontWeight = FontWeight.Bold, fontSize = 16.sp, color = Color.Black)
+                Text(text = hospital, fontSize = 14.sp, color = Color.Gray)
             }
         }
     }
