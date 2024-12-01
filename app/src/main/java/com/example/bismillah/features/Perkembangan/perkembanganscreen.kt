@@ -1,7 +1,5 @@
-package com.example.bismillah.features
+package com.example.bismillah.features.Perkembangan
 
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -19,11 +17,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.example.bismillah.ui.theme.Poppins
@@ -75,7 +70,7 @@ fun PerkembanganScreen(navController: NavHostController) {
                         if (snapshot != null) {
                             journalEntries = snapshot.documents.mapNotNull { doc ->
                                 val entry = doc.toObject(JournalEntry::class.java)
-                                entry?.copy(id = doc.id)  // Menambahkan ID dokumen
+                                entry?.copy(id = doc.id)
                             }
                         }
                     }
@@ -135,7 +130,6 @@ fun PerkembanganScreen(navController: NavHostController) {
             }
         }
 
-        // Input dialog for adding new entry
         if (showInputDialog) {
             AlertDialog(
                 onDismissRequest = { showInputDialog = false },
@@ -171,7 +165,7 @@ fun PerkembanganScreen(navController: NavHostController) {
                                         newEntryNotes = ""
                                     }
                                     .addOnFailureListener {
-                                        // Handle failure
+                                        //tangkap error isi disini
                                     }
                             }
                         }
@@ -187,7 +181,6 @@ fun PerkembanganScreen(navController: NavHostController) {
             )
         }
 
-        // Edit Dialog for selected entry
         if (showEditDialog && selectedEntry != null) {
             AlertDialog(
                 onDismissRequest = { showEditDialog = false },
@@ -213,11 +206,11 @@ fun PerkembanganScreen(navController: NavHostController) {
                                 val entryData = JournalEntry(
                                     date = newEntryDate,
                                     notes = newEntryNotes,
-                                    id = selectedEntry!!.id // Gunakan ID yang dipilih untuk memperbarui dokumen
+                                    id = selectedEntry!!.id
                                 )
                                 firestore.collection("users").document(it.uid)
                                     .collection("journalEntries")
-                                    .document(selectedEntry!!.id)  // Gunakan ID dokumen yang dipilih
+                                    .document(selectedEntry!!.id)
                                     .update(
                                         "date", newEntryDate,
                                         "notes", newEntryNotes
@@ -237,8 +230,30 @@ fun PerkembanganScreen(navController: NavHostController) {
                     }
                 },
                 dismissButton = {
-                    Button(onClick = { showEditDialog = false }) {
-                        Text("Batal", fontFamily = Poppins)
+//                    Button(onClick = { showEditDialog = false }) {
+//                        Text("Batal", fontFamily = Poppins)
+//                    }
+//                    Spacer(modifier = Modifier.width(8.dp))
+                    Button(
+                        onClick = {
+                            user?.let {
+                                firestore.collection("users").document(it.uid)
+                                    .collection("journalEntries")
+                                    .document(selectedEntry!!.id)
+                                    .delete()
+                                    .addOnSuccessListener {
+                                        showEditDialog = false
+                                        newEntryDate = ""
+                                        newEntryNotes = ""
+                                    }
+                                    .addOnFailureListener {
+                                        //tangkap error isi disini
+                                    }
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
+                    ) {
+                        Text("Hapus", fontFamily = Poppins, color = Color.White)
                     }
                 }
             )
@@ -251,10 +266,10 @@ fun JournalCard(entry: JournalEntry, onCardClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp)
-            .background(Color.White)
+            .padding(vertical = 8.dp)
             .clickable { onCardClick() },
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5))
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
@@ -265,14 +280,19 @@ fun JournalCard(entry: JournalEntry, onCardClick: () -> Unit) {
                 color = Color.Black
             )
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = entry.notes)
+            Text(
+                text = entry.notes,
+                fontFamily = Poppins,
+                color = Color.Gray
+            )
         }
     }
 }
 
+
 data class JournalEntry(
     val date: String = "",
     val notes: String = "",
-    val id: String = "" // Tambahkan id untuk menyimpan ID dokumen
+    val id: String = ""
 )
 
