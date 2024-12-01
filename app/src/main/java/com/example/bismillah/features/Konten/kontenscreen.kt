@@ -79,7 +79,7 @@ fun KontenScreen(navController: NavHostController) {
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(innerPadding)
-                .padding(top = 20.dp, start = 18.dp, end = 18.dp, bottom = 64.dp)
+                .padding(top = 20.dp, start = 20.dp, end = 20.dp, bottom = 64.dp)
         ) {
 
             Text(

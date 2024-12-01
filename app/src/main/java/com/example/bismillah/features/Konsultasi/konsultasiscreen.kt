@@ -23,6 +23,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,9 +43,25 @@ import com.example.bismillah.others.BottomBar
 import com.example.bismillah.ui.theme.Poppins
 import com.example.bismillah.R
 import com.example.bismillah.others.Screen
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun konsultasiScreen(navController: NavHostController){
+    val auth = FirebaseAuth.getInstance()
+    var userName by remember { mutableStateOf("") }
+    var isLoading by remember { mutableStateOf(true) }
+
+    LaunchedEffect(auth.currentUser) {
+        val user = auth.currentUser
+        user?.let {
+            userName = it.displayName ?: it.email ?: "Nama Tidak Tersedia"
+            isLoading = false
+        } ?: run {
+            userName = "Pengguna tidak terdaftar"
+            isLoading = false
+        }
+    }
+
     Scaffold(bottomBar = {
         BottomBar(navController = navController)
     }
@@ -57,7 +74,7 @@ fun konsultasiScreen(navController: NavHostController){
         ) {
             Text(text = "Welcome,", fontSize = 14.sp, fontFamily = Poppins, fontWeight = FontWeight.Bold, color = Color.Black, )
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "Indrima", fontSize = 20.sp, fontFamily = Poppins, fontWeight = FontWeight.Bold, color = Color.Black,)
+            Text(text = "Mama $userName", fontSize = 20.sp, fontFamily = Poppins, fontWeight = FontWeight.Bold, color = Color.Black,)
 
             Spacer(modifier = Modifier.height(20.dp))
 

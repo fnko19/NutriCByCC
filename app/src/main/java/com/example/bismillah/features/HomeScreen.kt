@@ -86,6 +86,16 @@ fun HomeScreen(navController: NavHostController) {
 
             StuntingWarningSection()
 
+            Column {
+                Text(
+                    text = "Kegiatan Stimulasi",
+                    fontFamily = Poppins,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+            }
+
             Column(
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())
@@ -161,7 +171,7 @@ fun UserProfileSection(userName: String, userAge: String) {
                 ) {
                     Column(horizontalAlignment = Alignment.Start) {
                         Text(
-                            text = "5.5 kg",
+                            text = "Selalu Pastikan",
                             fontFamily = Poppins,
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Bold,
@@ -173,7 +183,7 @@ fun UserProfileSection(userName: String, userAge: String) {
             }
         }
     }
-    Spacer(modifier = Modifier.height(8.dp))
+    Spacer(modifier = Modifier.height(16.dp))
 }
 
 @Composable
@@ -233,7 +243,7 @@ fun ActivityCategories(onCategoryClick: (String) -> Unit) {
             onClick = { onCategoryClick("Kalkulator") }
         )
     }
-    Spacer(modifier = Modifier.height(16.dp))
+    Spacer(modifier = Modifier.height(20.dp))
 }
 
 @Composable
@@ -287,7 +297,7 @@ fun StuntingWarningSection() {
             }
         }
     }
-    Spacer(modifier = Modifier.height(16.dp))
+    Spacer(modifier = Modifier.height(20.dp))
 }
 
 @Composable
@@ -324,18 +334,18 @@ fun StimulationActivities() {
             }
         )
     }
-
-    Column {
-        Text(
-            text = "Kegiatan Stimulasi",
-            fontFamily = Poppins,
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Bold
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-    }
-    Spacer(modifier = Modifier.height(16.dp))
 }
+//    Column {
+//        Text(
+//            text = "Kegiatan Stimulasi",
+//            fontFamily = Poppins,
+//            fontSize = 14.sp,
+//            fontWeight = FontWeight.Bold
+//        )
+//        Spacer(modifier = Modifier.height(8.dp))
+
+//    Spacer(modifier = Modifier.height(20.dp))
+//}
 
 @Composable
 fun StimulationActivity(activity: String, isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
