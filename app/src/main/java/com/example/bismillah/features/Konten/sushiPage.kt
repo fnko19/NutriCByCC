@@ -86,36 +86,31 @@ fun sushiPage(navController: NavHostController){
                             modifier = Modifier
                                 .height(190.dp)
                                 .width(230.dp)
-                                .padding(start = 32.dp)
+                                .padding(start = 22.dp)
                                 .clip(RoundedCornerShape(8.dp)),
                             contentScale = ContentScale.Fit,
                             alignment = Alignment.Center
                         )
                     }
                 }
-
-                // Recipe Title
-                androidx.compose.material3.Text(
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
                     text = "Sushi Rolls dan Buah",
-                    fontSize = 20.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = Poppins,
                     color = Color(0xFF0D3B66),
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
-
-                // Recipe Description
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = "Sushi ini adalah pilihan makanan sehat dan lezat untuk MPASI bayi! Dengan cita rasa yang menyenangkan, sushi ini menjadi cara seru untuk memperkenalkan berbagai tekstur dan rasa kepada si kecil.",
-                    fontSize = 14.sp,
+                    fontSize = 12.sp,
                     fontFamily = Poppins,
                     color = Color(0xFF0D3B66),
                     textAlign = TextAlign.Justify,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
-
-                // Details Row
                 Spacer(modifier = Modifier.height(8.dp))
                 Row(modifier = Modifier.fillMaxWidth()) {
                     DetailA(label = "12 bulan")
@@ -124,8 +119,6 @@ fun sushiPage(navController: NavHostController){
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
-
-                // Ingredients and Steps Section
                 Column(
                     modifier = Modifier
                         .verticalScroll(rememberScrollState())
@@ -136,7 +129,7 @@ fun sushiPage(navController: NavHostController){
                     // Ingredients
                     Text(
                         text = "Bahan",
-                        fontSize = 16.sp,
+                        fontSize = 14.sp,
                         fontFamily = Poppins,
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFF0D3B66),
@@ -145,16 +138,14 @@ fun sushiPage(navController: NavHostController){
                     Text(
                         text = "1 cangkir beras\n1/4 cangkir air matang\n1/2 sendok teh kecap ikan\n1 sendok makan unsalted cheese\n100 gram ikan salmon matang\n1/4 buah mentimun\n2 butir telur puyuh (bisa diganti telur ayam)\nunsalted butter\nBuah apapun yang ada di kulkas",
                         fontFamily = Poppins,
-                        fontSize = 14.sp,
+                        fontSize = 12.sp,
                         color = Color(0xFF0D3B66)
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
-
-                    // Steps
                    Text(
                         text = "Langkah-langkah",
-                        fontSize = 16.sp,
+                        fontSize = 14.sp,
                         fontFamily = Poppins,
                         color = Color(0xFF0D3B66),
                         fontWeight = FontWeight.Bold,
@@ -164,7 +155,7 @@ fun sushiPage(navController: NavHostController){
                         text = "1. Cuci beras dan masak dengan 1 ¼ cangkir air hingga matang, diamkan 10 menit. Tambahkan kecap ikan dan aduk.\n2. Dadar telur dengan sedikit butter, lalu potong tipis.\n3. Potong kecil ikan salmon matang dan iris tipis mentimun.\n4. Ratakan nasi di atas plastik wrap, tambahkan telur, salmon, mentimun, dan unsalted cheese di tengah.\n5. Gulung nasi dengan plastik wrap, simpan sebentar agar mudah dipotong.\n6. Lepaskan plastik wrap, potong sushi rolls, dan sajikan dengan buah.",
                         fontFamily = Poppins,
                         color = Color(0xFF0D3B66),
-                        fontSize = 14.sp
+                        fontSize = 12.sp
                     )
                 }
             }
@@ -193,7 +184,7 @@ fun DetailA(label: String) {
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF0D3B66),
                 textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth() // Ensure the text is centered
+                modifier = Modifier.fillMaxWidth()
             )
         }
     }

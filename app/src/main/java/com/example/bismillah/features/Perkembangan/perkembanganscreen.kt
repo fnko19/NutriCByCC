@@ -1,5 +1,6 @@
 package com.example.bismillah.features.Perkembangan
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -39,6 +40,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import com.example.bismillah.R
 
@@ -60,8 +62,8 @@ fun PerkembanganScreen(navController: NavHostController) {
         var newEntryNotes by remember { mutableStateOf("") }
         var showEditDialog by remember { mutableStateOf(false) }
         var selectedEntry by remember { mutableStateOf<JournalEntry?>(null) }
+        val context = LocalContext.current
 
-        // Load journal entries
         LaunchedEffect(user) {
             user?.let {
                 firestore.collection("users").document(it.uid)
@@ -166,8 +168,8 @@ fun PerkembanganScreen(navController: NavHostController) {
                                         newEntryDate = ""
                                         newEntryNotes = ""
                                     }
-                                    .addOnFailureListener {
-                                        //tangkap error isi disini
+                                    .addOnFailureListener { exception ->
+                                        Toast.makeText(context, "Gagal menambahkan entri jurnal: ${exception.message}", Toast.LENGTH_SHORT).show()
                                     }
                             }
                         }
@@ -222,8 +224,8 @@ fun PerkembanganScreen(navController: NavHostController) {
                                         newEntryDate = ""
                                         newEntryNotes = ""
                                     }
-                                    .addOnFailureListener {
-                                        // Handle failure
+                                    .addOnFailureListener { exception ->
+                                        Toast.makeText(context, "Gagal mengedit jurnal: ${exception.message}", Toast.LENGTH_SHORT).show()
                                     }
                             }
                         }
@@ -248,8 +250,8 @@ fun PerkembanganScreen(navController: NavHostController) {
                                         newEntryDate = ""
                                         newEntryNotes = ""
                                     }
-                                    .addOnFailureListener {
-                                        //tangkap error isi disini
+                                    .addOnFailureListener {exception ->
+                                        Toast.makeText(context, "Gagal menghapus entri jurnal: ${exception.message}", Toast.LENGTH_SHORT).show()
                                     }
                             }
                         },

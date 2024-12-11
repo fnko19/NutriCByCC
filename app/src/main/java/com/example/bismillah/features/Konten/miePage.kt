@@ -88,7 +88,7 @@ fun MiePage(navController: NavHostController){
                             modifier = Modifier
                                 .height(220.dp)
                                 .width(230.dp)
-                                .padding(start = 32.dp)
+                                .padding(start = 24.dp)
                                 .clip(RoundedCornerShape(8.dp)),
                             contentScale = ContentScale.Fit,
                             alignment = Alignment.Center
@@ -96,10 +96,10 @@ fun MiePage(navController: NavHostController){
                     }
                 }
 
-
+                Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = "Mie Pagi Ceria",
-                    fontSize = 20.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = Poppins,
                     color = Color(0xFF0D3B66),
@@ -110,7 +110,7 @@ fun MiePage(navController: NavHostController){
 
                 Text(
                     text = "Mie Pagi Ceria adalah hidangan MPASI yang lezat dan bergizi, cocok untuk memulai hari si kecil dengan penuh semangat.",
-                    fontSize = 14.sp,
+                    fontSize = 12.sp,
                     fontFamily = Poppins,
                     color = Color(0xFF0D3B66),
                     textAlign = TextAlign.Justify,
@@ -128,8 +128,6 @@ fun MiePage(navController: NavHostController){
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
-
-                // Scrollable content
                 Column(
                     modifier = Modifier
                         .verticalScroll(rememberScrollState())
@@ -140,7 +138,7 @@ fun MiePage(navController: NavHostController){
                     // Ingredients Section
                     Text(
                         text = "Bahan",
-                        fontSize = 16.sp,
+                        fontSize = 14.sp,
                         fontFamily = Poppins,
                         color = Color(0xFF0D3B66),
                         fontWeight = FontWeight.Bold,
@@ -150,15 +148,13 @@ fun MiePage(navController: NavHostController){
                         text = "50 gram sayuran (seperti wortel dan brokoli, potong kecil-kecil)\n1 butir telur (atau 50 gram tahu, jika vegetarian)\n1 sendok makan minyak sayur (seperti minyak zaitun)\n1/2 sendok teh kecap ikan (opsional)",
                         fontFamily = Poppins,
                         color = Color(0xFF0D3B66),
-                        fontSize = 14.sp
+                        fontSize = 12.sp
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
-
-                    // Steps Section
                     Text(
                         text = "Langkah-langkah",
-                        fontSize = 16.sp,
+                        fontSize = 14.sp,
                         fontFamily = Poppins,
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFF0D3B66),
@@ -168,7 +164,7 @@ fun MiePage(navController: NavHostController){
                         text = "1. Didihkan air, masukkan mie, dan masak hingga matang. Tiriskan.\n2. Kukus sayuran hingga lunak, sekitar 5-7 menit.\n3. Kocok telur, masak di wajan dengan sedikit minyak hingga matang, lalu potong kecil-kecil.\n4. Dalam mangkuk, campurkan mie, sayuran, dan potongan telur. Tambahkan kecap ikan jika ingin.\n5. Hidangkan mie dalam mangkuk, siap dinikmati!",
                         fontFamily = Poppins,
                         color = Color(0xFF0D3B66),
-                        fontSize = 14.sp
+                        fontSize = 12.sp
                     )
                 }
             }

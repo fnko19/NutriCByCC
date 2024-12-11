@@ -196,13 +196,13 @@ fun nutritionStatusCalculator(navController: NavHostController) {
                                 Text(
                                     text = "Kategori Status Gizi",
                                     fontWeight = FontWeight.Bold,
-                                    fontSize = 20.sp,
+                                    fontSize = 16.sp,
                                     color = Color(0xFF0D3B66),
                                     modifier = Modifier.padding(bottom = 8.dp)
                                 )
                                 Text(
                                     text = result,
-                                    fontSize = 16.sp,
+                                    fontSize = 14.sp,
                                     color = Color.Gray
                                 )
                             }

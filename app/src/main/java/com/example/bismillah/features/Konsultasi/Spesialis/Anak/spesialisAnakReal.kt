@@ -92,36 +92,36 @@ fun spesialisAnakPage(navController: NavController) {
                 AnakCard(
                     navController = navController,
                     imageRes = R.drawable.anak1,
-                    name = "dr. Vika Pramesti, Sp.GK, MPH, RD",
-                    hospital = "RSUP dr. Wahidin Sudirohusodo",
+                    name = "dr. Stella Ananda, Sp.A, IBCLC, CIMI",
+                    hospital = "RSUP Dr. Tadjuddin Chalid",
                     route = Screen.Stella.route,
                 )
                 AnakCard(
                     navController = navController,
                     imageRes = R.drawable.anak2,
-                    name = "dr. Vika Pramesti, Sp.GK, MPH, RD",
-                    hospital = "RSUP dr. Wahidin Sudirohusodo",
+                    name = "Prof. dr. Paul Martinus, Sp.A(K), DTM&H, MCTM(TP)",
+                    hospital = "Rumah Sakit Umum Pusat dr. Wahidin Sudirohusodo",
                     route = Screen.Paul.route,
                 )
                 AnakCard(
                     navController = navController,
                     imageRes = R.drawable.anak3,
-                    name = "dr. Vika Pramesti, Sp.GK, MPH, RD",
-                    hospital = "RSUP dr. Wahidin Sudirohusodo",
+                    name = "dr. Maya Salsabila, Sp.A, M.Sc, CIMI",
+                    hospital = "Rumah Sakit Universitas Hasanuddin",
                     route = Screen.Maya.route,
                 )
                 AnakCard(
                     navController = navController,
                     imageRes = R.drawable.anak4,
-                    name = "dr. Vika Pramesti, Sp.GK, MPH, RD",
-                    hospital = "RSUP dr. Wahidin Sudirohusodo",
+                    name = "dr. Dicky Kurniawan, Sp.A, FAAP, CIMI",
+                    hospital = "Rumah Sakit Umum Pusat dr. Wahidin Sudirohusodo",
                     route = Screen.Dicky.route,
                 )
                 AnakCard(
                     navController = navController,
                     imageRes = R.drawable.anak5,
-                    name = "dr. Vika Pramesti, Sp.GK, MPH, RD",
-                    hospital = "RSUP dr. Wahidin Sudirohusodo",
+                    name = "dr. Sylvia Kusuma, Sp.A, MPH, IBCLC",
+                    hospital = "Rumah Sakit Siloam Makassar",
                     route = Screen.Sylvia.route,
                 )
                 Spacer(modifier = Modifier.height(24.dp))

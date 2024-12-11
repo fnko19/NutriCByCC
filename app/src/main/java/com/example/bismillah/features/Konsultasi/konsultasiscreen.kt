@@ -43,6 +43,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.bismillah.others.BottomBar
 import com.example.bismillah.ui.theme.Poppins
 import com.example.bismillah.R
+import com.example.bismillah.features.Konsultasi.Spesialis.Anak.AnakCard
+import com.example.bismillah.features.Konsultasi.Spesialis.Gizi.GiziCard
 import com.example.bismillah.others.Screen
 import com.google.firebase.auth.FirebaseAuth
 
@@ -101,11 +103,32 @@ fun konsultasiScreen(navController: NavHostController){
 
             Column(
                 modifier = Modifier
-                    .verticalScroll(rememberScrollState()) // Bagian scroll dimulai dari sini
-                    .weight(1f) // Mengisi ruang yang tersisa
+                    .verticalScroll(rememberScrollState())
+                    .weight(1f)
                     .fillMaxHeight()
             ) {
-                PopularDoctors()
+                //PopularDoctors()
+                AnakCard(
+                    navController = navController,
+                    imageRes = R.drawable.gizi1,
+                    name = "dr. Vika Pramesti, Sp.GK, MPH, RD",
+                    hospital = "RSUP dr. Wahidin Sudirohusodo",
+                    route = Screen.Vika.route,
+                )
+                GiziCard(
+                    navController = navController,
+                    imageRes = R.drawable.gizi2,
+                    name = "dr. Mariana Komogi, Sp.GK., M.Clin.Med",
+                    hospital = "RS Siloam Makassar",
+                    route = Screen.Mariana.route,
+                )
+                AnakCard(
+                    navController = navController,
+                    imageRes = R.drawable.anak2,
+                    name = "Prof. dr. Paul Martinus, Sp.A(K), DTM&H, MCTM(TP)",
+                    hospital = "RSUP dr. Wahidin Sudirohusodo",
+                    route = Screen.Paul.route,
+                )
                 Spacer(modifier = Modifier.height(24.dp))
             }
 
@@ -142,7 +165,7 @@ fun SpecialityCard(name: String, iconId: Int, onClick: () -> Unit) {
         colors = CardDefaults.cardColors(containerColor = Color.White),
         modifier = Modifier
             .width(170.dp)
-            .clickable(onClick = onClick), // Menambahkan onClick sebagai parameter
+            .clickable(onClick = onClick),
         shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
     ) {
@@ -168,58 +191,58 @@ fun SpecialityCard(name: String, iconId: Int, onClick: () -> Unit) {
     }
 }
 
-@Composable
-fun PopularDoctors() {
-    Column {
-        DoctorCard(
-            name = "dr. Stella Ananda, Sp.A, IBCLC, CIMI",
-            specialization = "Dokter spesialis anak",
-            hospital = "RSUP Dr. Tadjuddin Chalid",
-            imageId = R.drawable.anak1
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        DoctorCard(
-            name = "dr. Mariana Komogi, Sp.GK., M.Clin.Med",
-            specialization = "Dokter spesialis gizi klinik",
-            hospital = "Rumah Sakit Siloam Makassar",
-            imageId = R.drawable.gizi1
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        DoctorCard(
-            name = "Prof. dr. Paul Martinus, Sp.A(K), DTM&H, MCTM(TP)",
-            specialization = "Dokter spesialis anak",
-            hospital = "Rumah Sakit Umum Pusat dr. Wahidin Sudirohusodo",
-            imageId = R.drawable.anak2
-        )
-    }
-}
-
-@Composable
-fun DoctorCard(name: String, specialization: String, hospital: String, imageId: Int) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        shape = RoundedCornerShape(8.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-    ) {
-        Row(modifier = Modifier.padding(16.dp)) {
-            Image(
-                painter = painterResource(id = imageId),
-                contentDescription = "Dokter Image",
-                modifier = Modifier
-                    .size(64.dp)
-                    .clip(RoundedCornerShape(8.dp))
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Column() {
-                Text(text = name, fontWeight = FontWeight.Bold, fontFamily = Poppins, fontSize = 14.sp, color = Color(0xFF0D3B66))
-                Spacer(modifier = Modifier.height(2.dp))
-                Text(text = specialization, fontFamily = Poppins, color = Color.DarkGray, fontSize = 10.sp)
-                Text(text = hospital, fontFamily = Poppins, color = Color.Gray, fontSize = 10.sp)
-            }
-        }
-    }
-}
+//@Composable
+//fun PopularDoctors() {
+//    Column {
+//        DoctorCard(
+//            name = "dr. Stella Ananda, Sp.A, IBCLC, CIMI",
+//            specialization = "Dokter spesialis anak",
+//            hospital = "RSUP Dr. Tadjuddin Chalid",
+//            imageId = R.drawable.anak1
+//        )
+//        Spacer(modifier = Modifier.height(16.dp))
+//        DoctorCard(
+//            name = "dr. Mariana Komogi, Sp.GK., M.Clin.Med",
+//            specialization = "Dokter spesialis gizi klinik",
+//            hospital = "Rumah Sakit Siloam Makassar",
+//            imageId = R.drawable.gizi1
+//        )
+//        Spacer(modifier = Modifier.height(16.dp))
+//        DoctorCard(
+//            name = "Prof. dr. Paul Martinus, Sp.A(K), DTM&H, MCTM(TP)",
+//            specialization = "Dokter spesialis anak",
+//            hospital = "Rumah Sakit Umum Pusat dr. Wahidin Sudirohusodo",
+//            imageId = R.drawable.anak2
+//        )
+//    }
+//}
+//
+//@Composable
+//fun DoctorCard(name: String, specialization: String, hospital: String, imageId: Int) {
+//    Card(
+//        modifier = Modifier.fillMaxWidth(),
+//        colors = CardDefaults.cardColors(containerColor = Color.White),
+//        shape = RoundedCornerShape(8.dp),
+//        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+//    ) {
+//        Row(modifier = Modifier.padding(16.dp)) {
+//            Image(
+//                painter = painterResource(id = imageId),
+//                contentDescription = "Dokter Image",
+//                modifier = Modifier
+//                    .size(64.dp)
+//                    .clip(RoundedCornerShape(8.dp))
+//            )
+//            Spacer(modifier = Modifier.width(16.dp))
+//            Column() {
+//                Text(text = name, fontWeight = FontWeight.Bold, fontFamily = Poppins, fontSize = 14.sp, color = Color(0xFF0D3B66))
+//                Spacer(modifier = Modifier.height(2.dp))
+//                Text(text = specialization, fontFamily = Poppins, color = Color.DarkGray, fontSize = 10.sp)
+//                Text(text = hospital, fontFamily = Poppins, color = Color.Gray, fontSize = 10.sp)
+//            }
+//        }
+//    }
+//}
 
 @Composable
 @Preview

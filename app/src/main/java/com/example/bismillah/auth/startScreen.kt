@@ -52,7 +52,6 @@ fun StartScreen(navController: NavController) {
         )
 
         Spacer(modifier = Modifier.height(8.dp))
-
         Text(
             text = "Let's Go!!",
             fontSize = 32.sp,
@@ -64,7 +63,6 @@ fun StartScreen(navController: NavController) {
         )
 
         Spacer(modifier = Modifier.height(36.dp))
-
         Image(
             painter = painterResource(id = R.drawable.robot),
             contentDescription = "Descriptive content for the image",
@@ -74,7 +72,6 @@ fun StartScreen(navController: NavController) {
         )
 
         Spacer(modifier = Modifier.height(80.dp))
-
         Button(
             onClick = {
                 navController.navigate(Screen.SignIn.route)
@@ -94,8 +91,6 @@ fun StartScreen(navController: NavController) {
                 color = Color.White
             )
         }
-
-
     }
 }
 
