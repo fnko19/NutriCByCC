@@ -205,6 +205,7 @@ fun UserProfileImage(userName: String, userAge: String) {
                 fontSize = 18.sp,
                 color = Color(0xFF0D3B66),
             )
+            Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = userAge,
                 fontFamily = Poppins,

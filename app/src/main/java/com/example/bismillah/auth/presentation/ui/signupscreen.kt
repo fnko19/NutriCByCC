@@ -78,14 +78,6 @@ fun SignupScreen(navController: NavController, authViewModel: AuthView){
             .fillMaxSize()
             .background(color = Color.White)
     ) {
-        // Background Image
-//        Image(
-//            painter = painterResource(id = R.drawable.bglogin), // Ganti dengan resource background gambar Anda
-//            contentDescription = "Background Image",
-//            contentScale = ContentScale.Crop,
-//            modifier = Modifier.fillMaxSize()
-//        )
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -103,9 +95,8 @@ fun SignupScreen(navController: NavController, authViewModel: AuthView){
                 color = Color.Black
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(36.dp))
 
-            // Name TextField
             TextField(
                 value = name,
                 onValueChange = { name = it
@@ -130,7 +121,6 @@ fun SignupScreen(navController: NavController, authViewModel: AuthView){
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Email TextField
             TextField(
                 value = email,
                 onValueChange = { email = it
@@ -155,7 +145,6 @@ fun SignupScreen(navController: NavController, authViewModel: AuthView){
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Password TextField
             TextField(
                 value = password,
                 onValueChange = { password = it
@@ -179,8 +168,6 @@ fun SignupScreen(navController: NavController, authViewModel: AuthView){
             )
 
             Spacer(modifier = Modifier.height(16.dp))
-
-            // Sign Up Button
             Button(
                 onClick = {
                     val signUpData = SignUpData(name = name, email = email, password = password)
@@ -207,25 +194,15 @@ fun SignupScreen(navController: NavController, authViewModel: AuthView){
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Text(
-                text = "Or Sign Up With",
-                fontFamily = Poppins,
-                fontSize = 12.sp,
-                color = Color.Black
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-
-            Image(
-                painter = painterResource(id = R.drawable.google),
-                contentDescription = "Google Logo",
-                modifier = Modifier
-                    .size(35.dp)
-                    .clickable(onClick = { /* Handle Google Sign Up */ })
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
+//            Image(
+//                painter = painterResource(id = R.drawable.google),
+//                contentDescription = "Google Logo",
+//                modifier = Modifier
+//                    .size(35.dp)
+//                    .clickable(onClick = { /* Handle Google Sign Up */ })
+//            )
+//
+//            Spacer(modifier = Modifier.height(8.dp))
 
             // Sign In Option
             Row(
@@ -243,24 +220,20 @@ fun SignupScreen(navController: NavController, authViewModel: AuthView){
             }
             Spacer(modifier = Modifier.height(16.dp))
             Image(
-                painter = painterResource(id = R.drawable.chatbot), // Ganti dengan resource robot Anda
+                painter = painterResource(id = R.drawable.chatbot),
                 contentDescription = "Robot Logo",
                 modifier = Modifier
-                    .size(220.dp) // Sesuaikan ukuran sesuai kebutuhan
-                    .padding(bottom = 16.dp) // Padding bawah untuk sedikit jarak dari tepi layar
-            )
+                    .size(220.dp)
+                    .padding(bottom = 16.dp))
         }
 
-
-
-        // Tulisan Logo di Bawah
         Image(
-            painter = painterResource(id = R.drawable.tulisan), // Ganti dengan resource logo tulisan Anda
+            painter = painterResource(id = R.drawable.tulisan),
             contentDescription = "Tulisan Logo",
             modifier = Modifier
                 .size(72.dp)
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 8.dp) // Padding bawah untuk memposisikan logo
+                .padding(bottom = 8.dp)
         )
     }
 }

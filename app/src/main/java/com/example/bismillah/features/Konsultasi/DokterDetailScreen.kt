@@ -35,71 +35,74 @@ fun DetailDokterScreen(
         modifier = Modifier.fillMaxSize(),
         color = Color.White
     ) {
-        Column(modifier = Modifier.fillMaxSize().padding(start=20.dp, top=70.dp, end=20.dp)) {
+        Column(modifier = Modifier.fillMaxSize().padding()) {
             Image(
                 painter = painterResource(id = imageRes),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(110.dp)
-                    .clip(CircleShape)
-                    .border(2.dp, Color.LightGray, CircleShape)
-                    .align(Alignment.CenterHorizontally)
+                    .height(200.dp)
+                    .fillMaxWidth()
+                    .shadow(2.dp)
             )
-            Spacer(modifier = Modifier.height(34.dp))
-            Text(
-                text = name,
-                fontWeight = FontWeight.Bold,
-                fontSize = 17.sp,
-                color = Color(0xFF0D3B66)
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = hospital,
-                fontSize = 14.sp,
-                color = Color(0xFF0D3B66)
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Text(
-                text = "Tentang",
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp,
-                color = Color(0xFF0D3B66)
-            )
-            Text(
-                text = description,
-                fontSize = 14.sp,
-                color = Color(0xFF0D3B66)
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "Waktu Praktik",
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp,
-                color = Color(0xFF0D3B66)
-            )
-            Text(
-                text = practiceTime,
-                fontSize = 14.sp,
-                color = Color(0xFF0D3B66)
-            )
-            Spacer(modifier = Modifier.height(36.dp))
-            Button(
-                onClick = {
-                    val intent = Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("https://wa.me/$waNumber")
-                    )
-                    context.startActivity(intent)
-                },
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFC107))
-            ) {
+            Spacer(modifier = Modifier.height(40.dp))
+            Column(modifier = Modifier.fillMaxSize().padding(start = 20.dp, end = 20.dp)) {
                 Text(
-                    text = "Hubungi via WhatsApp",
-                    color = Color.White
+                    text = name,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 17.sp,
+                    color = Color(0xFF0D3B66)
                 )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = hospital,
+                    fontSize = 14.sp,
+                    color = Color(0xFF0D3B66)
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    text = "Tentang",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp,
+                    color = Color(0xFF0D3B66)
+                )
+                Text(
+                    text = description,
+                    fontSize = 14.sp,
+                    color = Color(0xFF0D3B66)
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = "Waktu Praktik",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp,
+                    color = Color(0xFF0D3B66)
+                )
+                Text(
+                    text = practiceTime,
+                    fontSize = 14.sp,
+                    color = Color(0xFF0D3B66)
+                )
+                Spacer(modifier = Modifier.height(36.dp))
+                Button(
+                    onClick = {
+                        val intent = Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("https://wa.me/$waNumber")
+                        )
+                        context.startActivity(intent)
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(8.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFC107))
+                ) {
+                    Text(
+                        text = "Hubungi via WhatsApp",
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+
+                    )
+                }
             }
         }
     }

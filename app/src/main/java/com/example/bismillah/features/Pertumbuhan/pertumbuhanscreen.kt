@@ -1,5 +1,7 @@
 package com.example.bismillah.features.Pertumbuhan
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,6 +20,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.foundation.clickable
 
 @Composable
 fun PertumbuhanScreen(navController: NavHostController) {
@@ -25,10 +29,15 @@ fun PertumbuhanScreen(navController: NavHostController) {
     val firestore = FirebaseFirestore.getInstance()
     val user = auth.currentUser
 
-    var height by remember { mutableStateOf("0") }
-    var weight by remember { mutableStateOf("0") }
+    var height by remember { mutableStateOf("") }
+    var weight by remember { mutableStateOf("") }
     var growthHistory by remember { mutableStateOf<List<Map<String, String>>>(emptyList()) }
     var age by remember { mutableStateOf("") }
+    val context = LocalContext.current
+    var status by remember { mutableStateOf("") }
+    var showDialog by remember { mutableStateOf(false) }
+    var selectedEntry by remember { mutableStateOf<Map<String, String>?>(null) }
+    var showEditForm by remember { mutableStateOf(true) }
 
     LaunchedEffect(user) {
         user?.let {
@@ -43,23 +52,25 @@ fun PertumbuhanScreen(navController: NavHostController) {
                             "date" to (document.getString("date") ?: ""),
                             "height" to (document.getString("height") ?: ""),
                             "weight" to (document.getString("weight") ?: ""),
-                            "status" to (document.getString("status") ?: "")
+                            "status" to (document.getString("status") ?: ""),
+                            "id" to document.id // ID document untuk delete atau edit
                         )
                     }
                     growthHistory = history
                 }
-                .addOnFailureListener {
-                    //tangkap error isi disini
+                .addOnFailureListener { exception ->
+                    Log.e("FirestoreError", "Gagal mengambil data riwayat pertumbuhan", exception)
+                    Toast.makeText(context, "Gagal mengambil data: ${exception.message}", Toast.LENGTH_SHORT).show()
                 }
-
             firestore.collection("users")
                 .document(it.uid)
                 .get()
                 .addOnSuccessListener { document ->
                     age = document.getString("age") ?: "Usia tidak tersedia"
                 }
-                .addOnFailureListener {
-                    //tangkap error isi disini
+                .addOnFailureListener { exception ->
+                    Toast.makeText(context, "Gagal mengambil data: ${exception.message}", Toast.LENGTH_SHORT).show()
+                    age = "Gagal mengambil data usia"
                 }
         }
     }
@@ -79,7 +90,7 @@ fun PertumbuhanScreen(navController: NavHostController) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(start=16.dp, top=48.dp, end=16.dp)
+                    .padding(start = 16.dp, top = 48.dp, end = 16.dp)
             ) {
                 Text(
                     text = "Pertumbuhan",
@@ -91,6 +102,7 @@ fun PertumbuhanScreen(navController: NavHostController) {
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
+
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     colors = CardDefaults.cardColors(Color.White),
@@ -111,7 +123,7 @@ fun PertumbuhanScreen(navController: NavHostController) {
                             Text(
                                 text = age,
                                 fontSize = 12.sp,
-                                fontFamily = Poppins ,
+                                fontFamily = Poppins,
                                 color = Color(0xFF0D3B66)
                             )
                         }
@@ -142,7 +154,11 @@ fun PertumbuhanScreen(navController: NavHostController) {
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(16.dp),
+                                    .padding(16.dp)
+                                    .clickable {
+                                        selectedEntry = entry
+                                        showDialog = true
+                                    },
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
                                 Text(text = entry["date"] ?: "", fontFamily = Poppins, fontSize = 12.sp, color = Color(0xFF0D3B66))
@@ -175,27 +191,107 @@ fun PertumbuhanScreen(navController: NavHostController) {
             }
         }
     }
-}
 
-@Composable
-fun GrowthCard(label: String, value: String) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            //.weight(1f)
-            .padding(horizontal = 4.dp),
-        colors = CardDefaults.cardColors(Color(0xFFF5F5F5)),
-        elevation = CardDefaults.cardElevation(4.dp)
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(text = label, fontWeight = FontWeight.Bold, fontSize = 14.sp, fontFamily = Poppins, color = Color(0xFF0D3B66))
-            Text(text = value, fontSize = 14.sp, fontFamily = Poppins, color = Color(0xFF0D3B66))
-        }
+    if (showDialog && selectedEntry != null) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = { Text("Pilih Aksi") },
+            text = {
+                Column {
+                    Text("Apa yang ingin Anda lakukan dengan data ini?")
+                    if (showEditForm) {
+                        TextField(
+                            value = height,
+                            onValueChange = { height = it },
+                            label = { Text("Tinggi Badan (cm)") }
+                        )
+                        TextField(
+                            value = weight,
+                            onValueChange = { weight = it },
+                            label = { Text("Berat Badan (kg)") }
+                        )
+                        TextField(
+                            value = status,
+                            onValueChange = { status = it },
+                            label = { Text("Status") }
+                        )
+                    }
+                }
+            },
+            confirmButton = {
+                Button(onClick = {
+                    if (showEditForm) {
+                        selectedEntry?.let {
+                            user?.let { currentUser ->
+                                firestore.collection("users")
+                                    .document(currentUser.uid)
+                                    .collection("growth")
+                                    .document(it["id"] ?: "")
+                                    .update(
+                                        "height", height,
+                                        "weight", weight,
+                                        "status", status
+                                    )
+                                    .addOnSuccessListener {
+                                        Toast.makeText(context, "Data berhasil diperbarui", Toast.LENGTH_SHORT).show()
+                                        showDialog = false
+                                        showEditForm = false
+                                    }
+                                    .addOnFailureListener { exception ->
+                                        Toast.makeText(context, "Gagal memperbarui data: ${exception.message}", Toast.LENGTH_SHORT).show()
+                                    }
+                            }
+                        }
+                    }
+                }) {
+                    Text("Update")
+                }
+            },
+            dismissButton = {
+                Button(onClick = {
+                    selectedEntry?.let {
+                        user?.let { currentUser ->
+                            firestore.collection("users")
+                                .document(currentUser.uid)
+                                .collection("growth")
+                                .document(it["id"] ?: "")
+                                .delete()
+                                .addOnSuccessListener {
+                                    Toast.makeText(context, "Data dihapus", Toast.LENGTH_SHORT).show()
+                                    showDialog = false
+                                }
+                                .addOnFailureListener { exception ->
+                                    Toast.makeText(context, "Gagal menghapus data: ${exception.message}", Toast.LENGTH_SHORT).show()
+                                }
+                        }
+                    }
+                }) {
+                    Text("Hapus")
+                }
+            }
+        )
     }
 }
+
+//@Composable
+//fun GrowthCard(label: String, value: String) {
+//    Card(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            //.weight(1f)
+//            .padding(horizontal = 4.dp),
+//        colors = CardDefaults.cardColors(Color(0xFFF5F5F5)),
+//        elevation = CardDefaults.cardElevation(4.dp)
+//    ) {
+//        Column(
+//            modifier = Modifier
+//                .padding(16.dp)
+//                .fillMaxWidth(),
+//            horizontalAlignment = Alignment.CenterHorizontally
+//        ) {
+//            Text(text = label, fontWeight = FontWeight.Bold, fontSize = 14.sp, fontFamily = Poppins, color = Color(0xFF0D3B66))
+//            Text(text = value, fontSize = 14.sp, fontFamily = Poppins, color = Color(0xFF0D3B66))
+//        }
+//    }
+//}
 

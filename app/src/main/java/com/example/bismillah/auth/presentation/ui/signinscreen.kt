@@ -63,7 +63,7 @@ fun SigninScreen(navController: NavController, authViewModel: AuthView) {
             .fillMaxSize()
     ) {
         Image(
-            painter = painterResource(id = R.drawable.bgloginv2), // Ganti dengan resource gambar background Anda
+            painter = painterResource(id = R.drawable.bgloginv2),
             contentDescription = "Background Image",
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
@@ -74,24 +74,24 @@ fun SigninScreen(navController: NavController, authViewModel: AuthView) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 0.dp)
-                .align(Alignment.TopCenter), // Menempatkan konten di bagian tengah atas
+                .align(Alignment.TopCenter),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(240.dp)) // Memberikan jarak dari atas
+            Spacer(modifier = Modifier.height(240.dp))
 
             // Avatar atau gambar robot di bagian atas
-//            Image(
-//                painter = painterResource(id = R.drawable.robotsi),
-//                contentDescription = "Logo",
-//                modifier = Modifier.size(180.dp) // Ukuran gambar robot
-//            )
+//            Image(    painter = painterResource(id = R.drawable.robotsi),
+////                contentDescription = "Logo",
+////                modifier = Modifier.size(180.dp) // Ukuran gambar robot
+////            )
+//
 
             Spacer(modifier = Modifier.height(16.dp))
 
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(24.dp), // Padding untuk konten dalam kartu
+                        .padding(24.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
@@ -103,8 +103,6 @@ fun SigninScreen(navController: NavController, authViewModel: AuthView) {
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
-
-                    // Email TextField
                     TextField(
                         value = email,
                         onValueChange = {
@@ -130,7 +128,6 @@ fun SigninScreen(navController: NavController, authViewModel: AuthView) {
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // Password TextField
                     TextField(
                         value = password,
                         onValueChange = {
@@ -156,7 +153,6 @@ fun SigninScreen(navController: NavController, authViewModel: AuthView) {
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // Sign In Button
                     Button(
                         onClick = {
                             val signInData = SignInData(email, password)
@@ -176,27 +172,17 @@ fun SigninScreen(navController: NavController, authViewModel: AuthView) {
 
                     Spacer(modifier = Modifier.height(32.dp))
 
-                    Text(
-                        text = "Or Sign In With",
-                        fontFamily = Poppins,
-                        fontSize = 12.sp,
-                        color = Color.Black
-                    )
+//                    // Google Sign In Button
+//                    Image(
+//                        painter = painterResource(id = R.drawable.google),
+//                        contentDescription = "Google Logo",
+//                        modifier = Modifier
+//                            .size(35.dp)
+//                            .clickable(onClick = { /* Handle Google Sign In */ })
+//                    )
+//
+//                    Spacer(modifier = Modifier.height(8.dp))
 
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    // Google Sign In Button
-                    Image(
-                        painter = painterResource(id = R.drawable.google),
-                        contentDescription = "Google Logo",
-                        modifier = Modifier
-                            .size(35.dp)
-                            .clickable(onClick = { /* Handle Google Sign In */ })
-                    )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    // Sign Up Option
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center,

@@ -1,5 +1,7 @@
 package com.example.bismillah.features.Pertumbuhan
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.google.firebase.auth.FirebaseAuth
@@ -18,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.bismillah.ui.theme.Poppins
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 
 @Composable
@@ -30,6 +33,7 @@ fun AddGrowthScreen(navController: NavHostController) {
     var height by remember { mutableStateOf("") }
     var weight by remember { mutableStateOf("") }
     var status by remember { mutableStateOf("") }
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -102,8 +106,9 @@ fun AddGrowthScreen(navController: NavHostController) {
                         .addOnSuccessListener {
                             navController.popBackStack()
                         }
-                        .addOnFailureListener { e ->
-                            //tangkap error isi disini
+                        .addOnFailureListener { exception ->
+                            Log.e("FirestoreError", "Gagal menambahkan data pertumbuhan", exception)
+                            Toast.makeText(context, "Gagal menambahkan data: ${exception.message}", Toast.LENGTH_SHORT).show()
                         }
                 }
             },

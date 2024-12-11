@@ -108,16 +108,16 @@ fun spesialisGizi(navController: NavController) {
                 GiziCard(
                     navController = navController,
                     imageRes = R.drawable.gizi3,
-                    name = "dr. Jonathan Andika, Sp.GK",
+                    name = "dr. Jonathan Aditya Patel, Sp.GK, RD, IBCLC",
                     hospital = "RS Premier Surabaya",
                     route = Screen.Jonathan.route,
                 )
                 GiziCard(
                     navController = navController,
                     imageRes = R.drawable.gizi5,
-                    name = "dr. Olivia Santoso, Sp.GK",
+                    name = "dr. Olivia Rahma Spencer, Sp.GK, RD, MSc",
                     hospital = "RS Mitra Keluarga Jakarta",
-                    route = Screen.Vika.route,
+                    route = Screen.Olivia.route,
                 )
                 Spacer(modifier = Modifier.height(24.dp))
             }

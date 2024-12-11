@@ -82,18 +82,20 @@ fun PopSiclePage(navController: NavHostController){
                             painter = painterResource(id = R.drawable.b),
                             contentDescription = "Food Image",
                             modifier = Modifier
-                                .height(190.dp)
+                                .height(220.dp)
                                 .width(230.dp)
-                                .padding(start = 32.dp)
+                                .padding(start = 12.dp)
                                 .clip(RoundedCornerShape(8.dp)),
                             contentScale = ContentScale.Fit,
                             alignment = Alignment.Center
                         )
                     }
                 }
+
+                Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = "Popsicle Mangga",
-                    fontSize = 20.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = Poppins,
                     color = Color(0xFF0D3B66),
@@ -104,7 +106,7 @@ fun PopSiclePage(navController: NavHostController){
 
                 Text(
                     text = "Popsicle mangga dengan yogurt adalah camilan sehat untuk bayi, ideal saat tumbuh gigi. Kombinasi mangga dan yogurt memberikan sensasi dingin yang menenangkan gusi, kaya vitamin A, C, dan probiotik untuk kesehatan pencernaan.",
-                    fontSize = 14.sp,
+                    fontSize = 12.sp,
                     fontFamily = Poppins,
                     color = Color(0xFF0D3B66),
                     textAlign = TextAlign.Justify,
@@ -130,7 +132,7 @@ fun PopSiclePage(navController: NavHostController){
                 ) {
                     Text(
                         text = "Bahan",
-                        fontSize = 16.sp,
+                        fontSize = 14.sp,
                         fontWeight = FontWeight.Bold,
                         fontFamily = Poppins,
                         color = Color(0xFF0D3B66),
@@ -140,15 +142,13 @@ fun PopSiclePage(navController: NavHostController){
                         text = "1 buah mangga matang\n100 ml yogurt plain\n50 ml air matang",
                         fontFamily = Poppins,
                         color = Color(0xFF0D3B66),
-                        fontSize = 14.sp
+                        fontSize = 12.sp
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
-
-                    // Steps Section
                     Text(
                         text = "Langkah-langkah",
-                        fontSize = 16.sp,
+                        fontSize = 14.sp,
                         fontFamily = Poppins,
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFF0D3B66),
@@ -158,7 +158,7 @@ fun PopSiclePage(navController: NavHostController){
                         text = "1. Kupas mangga, potong daging buahnya menjadi dadu kecil.\n2. Masukkan potongan mangga ke dalam blender. tambahkan sedikit air matang. Blender hingga halus.\n3. Tambahkan yogurt plain ke dalam blender. Campur hingga semua bahan tercampur rata.\n4. Tuang campuran mangga dan yogurt ke dalam cetakan popsicle. Isi cetakan hingga hampir penuh, tetapi pastikan ada sedikit ruang untuk menghindari meluap saat beku.\n5. Masukkan cetakan ke dalam freezer dan biarkan membeku selama sekitar 4-6 jam atau hingga popsicle mengeras.",
                         fontFamily = Poppins,
                         color = Color(0xFF0D3B66),
-                        fontSize = 14.sp
+                        fontSize = 12.sp
                     )
                 }
             }
