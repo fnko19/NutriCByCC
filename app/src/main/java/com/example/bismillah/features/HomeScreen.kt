@@ -19,7 +19,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.navigation.compose.rememberNavController
-import com.example.bismillah.ui.theme.SandyBrown
 import com.example.bismillah.ui.theme.White
 import com.example.bismillah.ui.theme.YaleBlue
 import com.example.bismillah.ui.theme.Grey
@@ -31,6 +30,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import com.example.bismillah.ui.theme.LemonChiffon
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.ui.draw.clip
 import com.example.bismillah.others.Screen
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -69,8 +70,8 @@ fun HomeScreen(navController: NavHostController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = Color(0xFFF5F5F5))
-                .padding(16.dp),
+                .background(color = Color(0xFFF7F7F7))
+                .padding(start=16.dp, top=48.dp, end=16.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -86,23 +87,25 @@ fun HomeScreen(navController: NavHostController) {
 
             StuntingWarningSection()
 
-            Column {
-                Text(
-                    text = "Kegiatan Stimulasi",
-                    fontFamily = Poppins,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-            }
+//            Column {
+//                Text(
+//                    text = "Kegiatan Stimulasi",
+//                    fontFamily = Poppins,
+//                    fontSize = 14.sp,
+//                    fontWeight = FontWeight.Bold
+//                )
+//                Spacer(modifier = Modifier.height(8.dp))
+//            }
 
             Column(
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())
                     .weight(1f)
                     .fillMaxHeight()
+
             ) {
-                StimulationActivities()
+                PictureSection()
+//                StimulationActivities()
                 Spacer(modifier = Modifier.height(48.dp))
             }
         }
@@ -114,21 +117,20 @@ fun HomeScreen(navController: NavHostController) {
 @Composable
 fun UserProfileSection(userName: String, userAge: String) {
     Column(modifier = Modifier
-        .fillMaxWidth()
-        .padding(0.dp)) {
+        .fillMaxWidth()) {
 
         UserProfileImage(userName, userAge)
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 1.dp),
+                .padding(top = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Card(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(end = 8.dp),
+                    .padding(end = 4.dp),
                 shape = RoundedCornerShape(10.dp),
                 elevation = 4.dp
             ) {
@@ -138,7 +140,7 @@ fun UserProfileSection(userName: String, userAge: String) {
                     horizontalArrangement = Arrangement.Start
                 ) {
 
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(4.dp))
 
                     Column {
                         Text(
@@ -146,12 +148,13 @@ fun UserProfileSection(userName: String, userAge: String) {
                             fontFamily = Poppins,
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Bold,
-                            color = SandyBrown
+                            color = Color(0xFFFFC107)
                         )
                         Text(
-                            text = "Selamat datang kembali di Nutric",
+                            text = "Selamat datang kembali di NutriC",
                             fontSize = 12.sp,
-                            fontFamily = Poppins
+                            fontFamily = Poppins,
+                            color = Color(0xFF0D3B66),
                         )
                     }
                 }
@@ -175,15 +178,15 @@ fun UserProfileSection(userName: String, userAge: String) {
                             fontFamily = Poppins,
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFFFF9800)
+                            color = Color(0xFFFFC107)
                         )
-                        Text(text = "Tumbuh kembang anak sehat!", fontSize = 12.sp, fontFamily = Poppins)
+                        Text(text = "Tumbuh kembang anak sehat!", fontSize = 12.sp, color = Color(0xFF0D3B66), fontFamily = Poppins)
                     }
                 }
             }
         }
     }
-    Spacer(modifier = Modifier.height(16.dp))
+    Spacer(modifier = Modifier.height(4.dp))
 }
 
 @Composable
@@ -194,38 +197,33 @@ fun UserProfileImage(userName: String, userAge: String) {
             .padding(bottom = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.pp),
-            contentDescription = "Profile Image",
-            modifier = Modifier.size(60.dp)
-        )
-
-        Spacer(modifier = Modifier.width(8.dp))
         Column {
             Text(
                 text = userName,
                 fontFamily = Poppins,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Normal,
-                color = Color.Black
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp,
+                color = Color(0xFF0D3B66),
             )
             Text(
                 text = userAge,
                 fontFamily = Poppins,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Light,
-                color = Grey)
+                color = Color.Gray,
+            )
         }
         Spacer(modifier = Modifier.weight(1f))
+
     }
 }
 @Composable
 fun ActivityCategories(onCategoryClick: (String) -> Unit) {
     Row(
         modifier = Modifier
-            .padding(top = 16.dp)
+            .padding(top = 8.dp)
             .fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceAround
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
         ActivityCategory(
             icon = painterResource(id = R.drawable.tumbuh),
@@ -233,12 +231,12 @@ fun ActivityCategories(onCategoryClick: (String) -> Unit) {
             onClick = { onCategoryClick("Tumbuh") }
         )
         ActivityCategory(
-            icon = painterResource(id = R.drawable.kembang),
+            icon = painterResource(id = R.drawable.gizi),
             title = "Kembang",
             onClick = { onCategoryClick("Kembang") }
         )
         ActivityCategory(
-            icon = painterResource(id = R.drawable.gizi),
+            icon = painterResource(id = R.drawable.kembang),
             title = "Cek Gizi",
             onClick = { onCategoryClick("Kalkulator") }
         )
@@ -261,8 +259,8 @@ fun ActivityCategory(icon: Painter, title: String, onClick: () -> Unit) {
             text = title,
             fontFamily = Poppins,
             fontSize = 12.sp,
+            color = Color(0xFF0D3B66),
             fontWeight = FontWeight.Bold,
-            color = YaleBlue
         )
     }
 }
@@ -274,7 +272,6 @@ fun StuntingWarningSection() {
         shape = RoundedCornerShape(10.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .shadow(4.dp)
     ) {
         Column(
             modifier = Modifier.padding(10.dp)
@@ -287,10 +284,10 @@ fun StuntingWarningSection() {
                     text = "Waspada Stunting! Kondisi ini dapat menghambat pertumbuhan dan perkembangan anak secara fisik dan kognitif. Pastikan asupan gizi tercukupi sejak dini!",
                     fontFamily = Poppins,
                     fontSize = 12.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black,
+                    color = Color(0xFF0D3B66),
                     modifier = Modifier
                         .weight(2.5f)
+                        .height(72.dp)
                         .fillMaxWidth(),
                     textAlign = TextAlign.Justify
                 )
@@ -301,40 +298,64 @@ fun StuntingWarningSection() {
 }
 
 @Composable
-fun StimulationActivities() {
-    val activities = listOf(
-        "Ajak anak bermain menumpuk balok untuk melatih motorik halus",
-        "Perkenalkan anak pada berbagai suara, seperti suara burung, musik",
-        "Bantu anak belajar mengguling ke depan dan ke belakang",
-        "Dorong anak untuk meraih mainan yang dipegang di atas kepala atau di depan mereka",
-        "Ajak anak bermain dengan mainan bertekstur (bola berbulu atau mainan empuk)",
-        "Mainkan permainan ciluk-ba untuk membangun pemahaman anak tentang objek yang tidak terlihat",
-        "Biarkan anak merangkak di atas permukaan berbeda",
-        "Ajak anak melihat wajahnya di cermin kecil, biarkan dia mengenali bayangannya sendiri",
-        "Bermain sambil bernyanyi dan bertepuk tangan bersama anak agar ia belajar mengikuti irama dan kata-kata",
-        "Bacakan buku dengan gambar berwarna-warni, ajak anak menunjukkan atau menyebutkan benda-benda di dalamnya"
-    )
+fun PictureSection() {
+    Column {
+            Image(
+                painter = painterResource(id = R.drawable.landing),
+                contentDescription = "Happy Kids",
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(RoundedCornerShape(10.dp)),
 
-    val checkboxStates = remember { mutableStateListOf(*List(activities.size) { false }.toTypedArray()) }
-
-    LaunchedEffect(Unit) {
-        loadCheckboxStates { states ->
-            checkboxStates.clear()
-            checkboxStates.addAll(states)
-        }
-    }
-
-    activities.forEachIndexed { index, activity ->
-        StimulationActivity(
-            activity = activity,
-            isChecked = checkboxStates[index],
-            onCheckedChange = { isChecked ->
-                checkboxStates[index] = isChecked
-                saveCheckboxStates(checkboxStates)
-            }
-        )
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = "Cegah Stunting, Wujudkan Generasi Cerdas!",
+                fontFamily = Poppins,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF0D3B66),
+                modifier = Modifier.padding(start=28.dp, top=12.dp, end=28.dp)
+            )
     }
 }
+
+
+@Composable
+//fun StimulationActivities() {
+//    val activities = listOf(
+//      "Ajak anak bermain menumpuk balok untuk melatih motorik halus",
+//      "Perkenalkan anak pada berbagai suara, seperti suara burung, musik",
+//      "Bantu anak belajar mengguling ke depan dan ke belakang",
+//      "Dorong anak untuk meraih mainan yang dipegang di atas kepala atau di depan mereka",
+//      "Ajak anak bermain dengan mainan bertekstur (bola berbulu atau mainan empuk)",
+//      "Mainkan permainan ciluk-ba untuk membangun pemahaman anak tentang objek yang tidak terlihat",
+//      "Biarkan anak merangkak di atas permukaan berbeda",
+//      "Ajak anak melihat wajahnya di cermin kecil, biarkan dia mengenali bayangannya sendiri",
+//      "Bermain sambil bernyanyi dan bertepuk tangan bersama anak agar ia belajar mengikuti irama dan kata-kata",
+//      "Bacakan buku dengan gambar berwarna-warni, ajak anak menunjukkan atau menyebutkan benda-benda di dalamnya"
+//  )
+//
+//  val checkboxStates = remember { mutableStateListOf(*List(activities.size) { false }.toTypedArray()) }
+//
+//  LaunchedEffect(Unit) {
+//      loadCheckboxStates { states ->
+//          checkboxStates.clear()
+//          checkboxStates.addAll(states)
+//      }
+//  }
+
+//  activities.forEachIndexed { index, activity ->
+//      StimulationActivity(
+//          activity = activity,
+//          isChecked = checkboxStates[index],
+//          onCheckedChange = { isChecked ->
+//              checkboxStates[index] = isChecked
+//              saveCheckboxStates(checkboxStates)
+//          }
+//      )
+//  }
+//}
 //    Column {
 //        Text(
 //            text = "Kegiatan Stimulasi",
@@ -347,86 +368,85 @@ fun StimulationActivities() {
 //    Spacer(modifier = Modifier.height(20.dp))
 //}
 
-@Composable
-fun StimulationActivity(activity: String, isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
-    Card(
-        backgroundColor = LemonChiffon,
-        shape = RoundedCornerShape(0.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 6.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(5.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = activity,
-                modifier = Modifier.weight(1f),
-                fontFamily = Poppins,
-                fontSize = 12.sp
-            )
-            Checkbox(
-                checked = isChecked,
-                onCheckedChange = onCheckedChange
-            )
-        }
-    }
-}
+//@Composable
+// fun StimulationActivity(activity: String, isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
+//     Card(
+//         backgroundColor = LemonChiffon,
+//        shape = RoundedCornerShape(0.dp),
+//        modifier = Modifier
+//           .fillMaxWidth()
+//           .padding(vertical = 6.dp)
+//   ) {
+//      Row(
+//          modifier = Modifier
+//              .fillMaxWidth()
+//              .padding(5.dp),
+//          horizontalArrangement = Arrangement.SpaceBetween,
+//          verticalAlignment = Alignment.CenterVertically
+//      ) {
+//          Text(
+//              text = activity,
+//              modifier = Modifier.weight(1f),
+//              fontFamily = Poppins,
+//              fontSize = 12.sp
+//          )
+//          Checkbox(
+//              checked = isChecked,
+//              onCheckedChange = onCheckedChange
+//          )
+//      }
+//  }
+// }
 
 
-fun saveCheckboxStates(checkboxStates: List<Boolean>) {
-    val currentUser = FirebaseAuth.getInstance().currentUser
-    val firestore = FirebaseFirestore.getInstance()
+// fun saveCheckboxStates(checkboxStates: List<Boolean>) {
+//   val currentUser = FirebaseAuth.getInstance().currentUser
+//  val firestore = FirebaseFirestore.getInstance()
 
-    currentUser?.let { user ->
-        firestore.collection("users")
-            .document(user.uid)
-            .collection("checkboxStates")
-            .document("states")
-            .set(mapOf("checkboxStates" to checkboxStates))
-            .addOnSuccessListener {
-                Log.d("Firestore", "Checkbox states saved successfully")
-            }
-            .addOnFailureListener { e ->
-                Log.e("Firestore", "Error saving checkbox states: ${e.message}")
-            }
-    }
-}
+//  currentUser?.let { user ->
+//      firestore.collection("users")
+//          .document(user.uid)
+//          .collection("checkboxStates")
+//          .document("states")
+//          .set(mapOf("checkboxStates" to checkboxStates))
+//          .addOnSuccessListener {
+//              Log.d("Firestore", "Checkbox states saved successfully")
+//      }
+//          .addOnFailureListener { e ->
+//              Log.e("Firestore", "Error saving checkbox states: ${e.message}")
+//          }
+//  }
+// }
 
-fun loadCheckboxStates(onLoaded: (List<Boolean>) -> Unit) {
-    val currentUser = FirebaseAuth.getInstance().currentUser
-    val firestore = FirebaseFirestore.getInstance()
+// fun loadCheckboxStates(onLoaded: (List<Boolean>) -> Unit) {
+//  val currentUser = FirebaseAuth.getInstance().currentUser
+//  val firestore = FirebaseFirestore.getInstance()
 
-    currentUser?.let { user ->
-        val docRef = firestore.collection("users")
-            .document(user.uid)
-            .collection("checkboxStates")
-            .document("states")
+//  currentUser?.let { user ->
+//      val docRef = firestore.collection("users")
+//          .document(user.uid)
+//          .collection("checkboxStates")
+//          .document("states")
 
-        docRef.get().addOnSuccessListener { document ->
-            if (document.exists()) {
-                val states = document.get("checkboxStates") as? List<Boolean>
-                if (states != null) {
-                    onLoaded(states)
-                } else {
-                    onLoaded(List(10) { false })
-                }
-            } else {
-                onLoaded(List(10) { false })
-            }
-        }.addOnFailureListener { e ->
-            Log.e("Firestore", "Error loading checkbox states: ${e.message}")
-            onLoaded(List(10) { false })
-        }
-    }
-}
+//      docRef.get().addOnSuccessListener { document ->
+//          if (document.exists()) {
+//              val states = document.get("checkboxStates") as? List<Boolean>
+//              if (states != null) {
+//                  onLoaded(states)
+//              } else {
+//                  onLoaded(List(10) { false })
+//              }
+//          } else {
+//              onLoaded(List(10) { false })
+//          }
+//      }.addOnFailureListener { e ->
+//          Log.e("Firestore", "Error loading checkbox states: ${e.message}")
+//          onLoaded(List(10) { false })
+//      }
+//  }
+// }
 
 @Preview
-@Composable
 fun HomescreenPreview() {
     HomeScreen(navController = rememberNavController())
 }

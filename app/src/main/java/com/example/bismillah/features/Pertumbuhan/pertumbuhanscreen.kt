@@ -73,21 +73,21 @@ fun PertumbuhanScreen(navController: NavHostController) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .background(Color.White),
+                .background(Color(0xFFF7F7F7)),
             contentAlignment = Alignment.Center
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp)
+                    .padding(start=16.dp, top=48.dp, end=16.dp)
             ) {
                 Text(
                     text = "Pertumbuhan",
                     fontWeight = FontWeight.Bold,
-                    fontSize = 24.sp,
+                    fontSize = 20.sp,
                     modifier = Modifier.align(Alignment.CenterHorizontally),
                     fontFamily = Poppins,
-                    color = Color.Black,
+                    color = Color(0xFF0D3B66)
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -104,15 +104,15 @@ fun PertumbuhanScreen(navController: NavHostController) {
                             Text(
                                 text = user?.displayName ?: "Nama Anak",
                                 fontWeight = FontWeight.Bold,
-                                fontSize = 16.sp,
+                                fontSize = 14.sp,
                                 fontFamily = Poppins,
-                                color = Color.Black,
+                                color = Color(0xFF0D3B66)
                             )
                             Text(
                                 text = age,
-                                fontSize = 14.sp,
+                                fontSize = 12.sp,
                                 fontFamily = Poppins ,
-                                color = Color.Black,
+                                color = Color(0xFF0D3B66)
                             )
                         }
                     }
@@ -123,9 +123,9 @@ fun PertumbuhanScreen(navController: NavHostController) {
                 Text(
                     text = "History",
                     fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp,
+                    fontSize = 14.sp,
                     fontFamily = Poppins,
-                    color = Color.Black
+                    color = Color(0xFF0D3B66)
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -142,13 +142,13 @@ fun PertumbuhanScreen(navController: NavHostController) {
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(8.dp),
+                                    .padding(16.dp),
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                Text(text = entry["date"] ?: "", fontFamily = Poppins, color = Color.Black)
-                                Text(text = "${entry["height"]} cm", fontFamily = Poppins, color = Color.Black)
-                                Text(text = "${entry["weight"]} kg", fontFamily = Poppins, color = Color.Black)
-                                Text(text = entry["status"] ?: "", fontFamily = Poppins, color = Color.Black)
+                                Text(text = entry["date"] ?: "", fontFamily = Poppins, fontSize = 12.sp, color = Color(0xFF0D3B66))
+                                Text(text = "${entry["height"]} cm", fontFamily = Poppins, fontSize = 12.sp, color = Color(0xFF0D3B66))
+                                Text(text = "${entry["weight"]} kg", fontFamily = Poppins, fontSize = 12.sp, color = Color(0xFF0D3B66))
+                                Text(text = entry["status"] ?: "", fontFamily = Poppins, fontSize = 12.sp, color = Color(0xFF0D3B66))
                             }
                         }
                     }
@@ -193,8 +193,8 @@ fun GrowthCard(label: String, value: String) {
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = label, fontWeight = FontWeight.Bold, fontSize = 16.sp, fontFamily = Poppins, color = Color.Black,)
-            Text(text = value, fontSize = 16.sp, fontFamily = Poppins, color = Color.Black,)
+            Text(text = label, fontWeight = FontWeight.Bold, fontSize = 14.sp, fontFamily = Poppins, color = Color(0xFF0D3B66))
+            Text(text = value, fontSize = 14.sp, fontFamily = Poppins, color = Color(0xFF0D3B66))
         }
     }
 }

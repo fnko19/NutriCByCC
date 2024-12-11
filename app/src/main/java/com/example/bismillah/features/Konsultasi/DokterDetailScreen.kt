@@ -14,8 +14,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.foundation.border
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
 
 @Composable
@@ -33,54 +35,55 @@ fun DetailDokterScreen(
         modifier = Modifier.fillMaxSize(),
         color = Color.White
     ) {
-        Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+        Column(modifier = Modifier.fillMaxSize().padding(start=20.dp, top=70.dp, end=20.dp)) {
             Image(
                 painter = painterResource(id = imageRes),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(120.dp)
+                    .size(110.dp)
                     .clip(CircleShape)
+                    .border(2.dp, Color.LightGray, CircleShape)
                     .align(Alignment.CenterHorizontally)
             )
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(34.dp))
             Text(
                 text = name,
                 fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                color = Color.Black,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                fontSize = 17.sp,
+                color = Color(0xFF0D3B66)
             )
+            Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = hospital,
                 fontSize = 14.sp,
-                color = Color.Gray,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                color = Color(0xFF0D3B66)
             )
             Spacer(modifier = Modifier.height(16.dp))
+
             Text(
                 text = "Tentang",
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
-                color = Color.Black
+                color = Color(0xFF0D3B66)
             )
             Text(
                 text = description,
                 fontSize = 14.sp,
-                color = Color.Black
+                color = Color(0xFF0D3B66)
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = "Waktu Praktik",
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
-                color = Color.Black
+                color = Color(0xFF0D3B66)
             )
             Text(
                 text = practiceTime,
                 fontSize = 14.sp,
-                color = Color.Black
+                color = Color(0xFF0D3B66)
             )
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(36.dp))
             Button(
                 onClick = {
                     val intent = Intent(
@@ -95,7 +98,7 @@ fun DetailDokterScreen(
             ) {
                 Text(
                     text = "Hubungi via WhatsApp",
-                    color = Color.Black
+                    color = Color.White
                 )
             }
         }

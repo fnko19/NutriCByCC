@@ -37,6 +37,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.draw.clip
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.bismillah.others.BottomBar
@@ -70,16 +71,13 @@ fun KontenScreen(navController: NavHostController) {
             BottomBar(navController = navController)
         }
     ) { innerPadding ->
-        var searchQuery by remember { mutableStateOf("") }
-        var selectedCategory by remember { mutableStateOf("Sarapan") }
-        var isLoading by remember { mutableStateOf(false) }
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(color = Color(0xFFF7F7F7))
                 .verticalScroll(rememberScrollState())
                 .padding(innerPadding)
-                .padding(top = 20.dp, start = 20.dp, end = 20.dp, bottom = 64.dp)
+                .padding(top = 40.dp, start = 20.dp, end = 20.dp, bottom = 36.dp)
         ) {
 
             Text(
@@ -89,44 +87,47 @@ fun KontenScreen(navController: NavHostController) {
                 fontFamily = Poppins,
                 color = Color(0xFF0D3B66),
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
+                    .fillMaxWidth(),
                 textAlign = TextAlign.Center
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(18.dp))
 
             Text(
-                text = "Haloo mamanya $userName! \nMau masak apa hari ini? ",
+                text = "Haloo mama $userName! \nMau masak apa hari ini? ",
                 fontSize = 14.sp,
                 fontFamily = Poppins,
                 color = Color(0xFF0D3B66),
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
+                    .fillMaxWidth(),
                 textAlign = TextAlign.Left
             )
 
-            Spacer(modifier = Modifier.height(12.dp))
-
-
-            SearchBar()
-
             Spacer(modifier = Modifier.height(24.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+
+            Image(
+                painter = painterResource(id = R.drawable.stunting),
+                contentDescription = "Anak Makan",
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(RoundedCornerShape(10.dp)),
+
+                )
+            Spacer(modifier = Modifier.height(8.dp))
+            Box(
+                modifier = Modifier.fillMaxWidth()
             ) {
-                RecipeCategoryCard("Sarapan", R.drawable.sarapan)
-                RecipeCategoryCard("Makan Siang", R.drawable.makansiang)
-                RecipeCategoryCard("Makan Malam", R.drawable.makanmalam)
+                Text(
+                    text = "Ayo Cegah Stunting dengan Makanan Bergizi",
+                    fontFamily = Poppins,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF0D3B66),
+                    modifier = Modifier.align(Alignment.Center)
+                )
             }
 
             Spacer(modifier = Modifier.height(24.dp))
-
-            if (isLoading) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-            }
 
             LazyRow(
                 modifier = Modifier.fillMaxWidth(),
@@ -161,31 +162,10 @@ fun KontenScreen(navController: NavHostController) {
                     }
                 }
             }
-            Spacer(modifier = Modifier.height(24.dp))
         }
     }
 }
 
-
-@Composable
-fun SearchBar() {
-    var searchText by remember { mutableStateOf("") }
-    OutlinedTextField(
-        value = searchText,
-        onValueChange = { searchText = it },
-        placeholder = { Text(text = "Cari resep", fontFamily = Poppins, fontSize = 14.sp, color = Color.Black) },
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(8.dp),
-        leadingIcon = {
-            Icon(
-                painter = painterResource(id = R.drawable.search),
-                contentDescription = "Search Icon",
-                tint = Color.Black,
-                modifier = Modifier.size(20.dp)
-            )
-        }
-    )
-}
 
 @Composable
 fun RecipeCategoryCard(title: String, imageRes: Int) {
@@ -231,7 +211,7 @@ fun MenuCard(
     Card(
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
-            .height(320.dp)
+            .height(290.dp)
             .width(194.dp)
             .shadow(4.dp, RoundedCornerShape(8.dp)),
         colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5))
@@ -241,15 +221,16 @@ fun MenuCard(
                 painter = painterResource(id = imageRes),
                 contentDescription = "Menu",
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.height(180.dp)
+                modifier = Modifier.height(160.dp)
             )
             androidx.compose.material3.Text(
                 foodName,
                 fontWeight = FontWeight.Bold,
                 fontFamily = poppinsFamily,
+                fontSize = 12.sp,
                 modifier = Modifier.padding(8.dp),
                 textAlign = TextAlign.Center,
-                color = Color.Black
+                color = Color(0xFF0D3B66)
             )
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -259,12 +240,12 @@ fun MenuCard(
             ) {
                 androidx.compose.material3.Text(babyAge,
                     fontFamily = poppinsFamily,
-                    color = Color.Black,
+                    color = Color(0xFF0D3B66),
                     fontSize = 12.sp)
             }
             Button(
                 onClick = {
-                    navController.navigate(destination) // Navigate to the correct detail screen
+                    navController.navigate(destination)
                 },
                 modifier = Modifier
                     .padding(12.dp)

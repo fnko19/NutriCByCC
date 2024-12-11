@@ -100,27 +100,19 @@ fun profileScreen(navController: NavHostController, authViewModel: AuthView) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 40.dp, start = 16.dp, end = 20.dp)
+                .padding(top = 70.dp, start = 16.dp, end = 20.dp)
                 .padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            AsyncImage(
-                model = profileImageUrl.ifEmpty { R.drawable.profil2 },
-                contentDescription = "Profile Picture",
-                modifier = Modifier
-                    .size(80.dp)
-                    .clip(CircleShape)
-                    .background(Color.Gray)
-                    .clickable { pickImageLauncher.launch("image/*") },
-                contentScale = ContentScale.Crop
-            )
-
             Text(
                 text = username,
-                fontSize = 16.sp,
+                fontSize = 20.sp,
+                color = Color(0xFF0D3B66),
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(top = 8.dp)
             )
+
+            Spacer(modifier = Modifier.height(20.dp))
 
             ProfileInputField(
                 label = "Usia",
@@ -128,17 +120,23 @@ fun profileScreen(navController: NavHostController, authViewModel: AuthView) {
                 onValueChange = { age = it }
             )
 
+            Spacer(modifier = Modifier.height(8.dp))
+
             ProfileInputField(
                 label = "Tanggal lahir",
                 value = birthDate,
                 onValueChange = { birthDate = it }
             )
 
+            Spacer(modifier = Modifier.height(8.dp))
+
             ProfileInputField(
                 label = "Ayah",
                 value = fatherName,
                 onValueChange = { fatherName = it }
             )
+
+            Spacer(modifier = Modifier.height(8.dp))
 
             ProfileInputField(
                 label = "Ibu",
@@ -166,7 +164,7 @@ fun profileScreen(navController: NavHostController, authViewModel: AuthView) {
                             }
                     }
                 },
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF4CAF50)),
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0D3B66)),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 16.dp)
@@ -185,7 +183,7 @@ fun profileScreen(navController: NavHostController, authViewModel: AuthView) {
                     .fillMaxWidth()
                     .padding(vertical = 16.dp)
             ) {
-                Text("Log Out", color = Color.Black, fontWeight = FontWeight.Bold)
+                Text("Log Out", color = Color.White, fontWeight = FontWeight.Bold)
             }
         }
     }
@@ -198,12 +196,13 @@ fun ProfileInputField(label: String, value: String, onValueChange: (String) -> U
             .fillMaxWidth()
             .padding(vertical = 4.dp)
     ) {
-        Text(text = label, fontWeight = FontWeight.Bold, color = Color.Gray, fontFamily = Poppins)
+        Text(text = label, fontWeight = FontWeight.Bold, color = Color(0xFF0D3B66), fontFamily = Poppins)
         TextField(
             value = value,
             onValueChange = onValueChange,
             modifier = Modifier
                 .fillMaxWidth()
+                .height(60.dp)
                 .padding(top = 8.dp),
             placeholder = { Text("Enter $label") },
             colors = TextFieldDefaults.textFieldColors(

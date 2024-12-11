@@ -2,6 +2,7 @@ package com.example.bismillah.features.Perkembangan
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -45,7 +46,7 @@ import com.example.bismillah.R
 fun PerkembanganScreen(navController: NavHostController) {
     Box(
         modifier = Modifier
-            .background(Color.White)
+            .background(Color(0xFFF7F7F7))
             .fillMaxSize(),
         contentAlignment = Alignment.TopCenter
     ) {
@@ -80,7 +81,7 @@ fun PerkembanganScreen(navController: NavHostController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(start=20.dp, top=40.dp, end=20.dp, bottom = 28.dp)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -97,11 +98,12 @@ fun PerkembanganScreen(navController: NavHostController) {
                 }
                 Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                     Text(
-                        "Jurnal Perkembangan Anak",
+                        "Jurnal Perkembangan",
                         fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp,
-                        color = Color.Black,
-                        fontFamily = Poppins
+                        fontSize = 18.sp,
+                        color = Color(0xFF0D3B66),
+                        fontFamily = Poppins,
+                        modifier = Modifier.padding(start=8.dp, top=12.dp, end=36.dp)
                     )
                 }
             }
@@ -126,7 +128,7 @@ fun PerkembanganScreen(navController: NavHostController) {
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFC107)),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Tambahkan Data", color = Color.Black, fontWeight = FontWeight.Bold, fontFamily = Poppins)
+                Text("Tambahkan Data", color = Color.White, fontWeight = FontWeight.Bold, fontFamily = Poppins)
             }
         }
 
@@ -253,7 +255,7 @@ fun PerkembanganScreen(navController: NavHostController) {
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
                     ) {
-                        Text("Hapus", fontFamily = Poppins, color = Color.White)
+                        Text("Hapus", fontFamily = Poppins, color = Color.White, )
                     }
                 }
             )
@@ -269,19 +271,20 @@ fun JournalCard(entry: JournalEntry, onCardClick: () -> Unit) {
             .padding(vertical = 8.dp)
             .clickable { onCardClick() },
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5))
+        colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
                 text = entry.date,
                 fontWeight = FontWeight.Bold,
-                fontSize = 18.sp,
+                fontSize = 14.sp,
                 fontFamily = Poppins,
-                color = Color.Black
+                color = Color(0xFF0D3B66)
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = entry.notes,
+                fontSize = 12.sp,
                 fontFamily = Poppins,
                 color = Color.Gray
             )

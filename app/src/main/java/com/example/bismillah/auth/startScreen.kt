@@ -46,7 +46,7 @@ fun StartScreen(navController: NavController) {
             fontSize = 16.sp,
             fontFamily = Poppins,
             fontWeight = FontWeight.Bold,
-            color = Color.Black,
+            color = Color(0xFF0D3B66),
             modifier = Modifier.padding(start = 16.dp,)
 
         )
@@ -58,7 +58,7 @@ fun StartScreen(navController: NavController) {
             fontSize = 32.sp,
             fontFamily = Poppins,
             fontWeight = FontWeight.Bold,
-            color = Color.Black,
+            color = Color(0xFF0D3B66),
             modifier = Modifier.padding(bottom = 8.dp)
 
         )
@@ -80,12 +80,12 @@ fun StartScreen(navController: NavController) {
                 navController.navigate(Screen.SignIn.route)
             },
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = Color(0xFFFBD758)
+                backgroundColor = Color(0xFFFFC107)
             ),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(44.dp)
-                .shadow(2.dp, shape = RoundedCornerShape(8.dp))
+                .shadow(1.dp, shape = RoundedCornerShape(8.dp))
         ) {
             Text(
                 text = "Mulai Sekarang",

@@ -70,22 +70,18 @@ fun spesialisAnakPage(navController: NavController) {
                         tint = Color.Black
                     )
                 }
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(2.dp))
                 Text(
                     text = "Daftar Dokter Spesialis Anak",
                     fontSize = 18.sp,
                     fontFamily = Poppins,
-                    color = Color.Black,
+                    color = Color(0xFF0D3B66),
                     style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
                     modifier = Modifier.padding(vertical = 16.dp)
                 )
             }
 
-            Spacer(modifier = Modifier.height(20.dp))
-
-            SearchBarAnak()
-
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
             Column(modifier = Modifier
                 .fillMaxSize()
@@ -135,32 +131,6 @@ fun spesialisAnakPage(navController: NavController) {
 }
 
 @Composable
-fun SearchBarAnak() {
-    OutlinedTextField(
-        value = "",
-        onValueChange = {},
-        placeholder = {
-            Text(
-                text = "Cari dokter",
-                fontFamily = Poppins,
-                fontSize = 14.sp,
-                color = Color.Black
-            )
-        },
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(8.dp),
-        leadingIcon = {
-            Icon(
-                painter = painterResource(id = R.drawable.search),
-                contentDescription = "Search Icon",
-                tint = Color.Black,
-                modifier = Modifier.size(20.dp)
-            )
-        }
-    )
-}
-
-@Composable
 fun AnakCard(navController: NavController, imageRes: Int, name: String, hospital: String,  route: String ) {
     Card(
         shape = RoundedCornerShape(8.dp),
@@ -182,8 +152,8 @@ fun AnakCard(navController: NavController, imageRes: Int, name: String, hospital
             )
             Spacer(modifier = Modifier.width(16.dp))
             Column {
-                Text(text = name, fontWeight = FontWeight.Bold, fontSize = 16.sp, color = Color.Black)
-                Text(text = hospital, fontSize = 14.sp, color = Color.Gray)
+                Text(text = name, fontWeight = FontWeight.Bold, fontSize = 14.sp, color = Color(0xFF0D3B66))
+                Text(text = hospital, fontSize = 12.sp, color = Color.Gray)
             }
         }
     }

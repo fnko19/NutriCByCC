@@ -13,6 +13,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import com.example.bismillah.ui.theme.Poppins
 
 @Composable
@@ -37,11 +38,12 @@ fun BottomBar(navController: NavHostController, modifier: Modifier = Modifier) {
                     Icon(
                         painter = painterResource(id = item.icon),
                         contentDescription = item.title,
-                        tint = Color.Black,
-                        modifier = Modifier.size(32.dp) // Set your desired size here
+                        tint = Color(0xFF0D3B66),
+                        modifier = Modifier
+                            .size(36.dp)
                     )
                 },
-                label = { Text(text = item.title, color = Color.Black, fontFamily = Poppins, fontSize = 11.sp ) },
+                label = { Text(text = item.title, color = Color(0xFF0D3B66), fontFamily = Poppins, fontSize = 11.sp ) },
                 selected = currentRoute == item.route,
                 onClick = {
                     navController.navigate(item.route) {
@@ -59,10 +61,10 @@ fun BottomBar(navController: NavHostController, modifier: Modifier = Modifier) {
 
 
 sealed class BottomNavItem(val title: String, val icon: Int, val route: String) {
-    object Home : BottomNavItem("Home", R.drawable.home2, "home")
-    object Konten : BottomNavItem("Resep", R.drawable.konten2, "konten")
-    object Konsultasi : BottomNavItem("Konsultasi", R.drawable.konsultasi2, "konsultasi")
-    object Profil : BottomNavItem("Profil", R.drawable.profil2, "profil")
+    object Home : BottomNavItem("Home", R.drawable.home, "home")
+    object Konten : BottomNavItem("Resep", R.drawable.konten, "konten")
+    object Konsultasi : BottomNavItem("Konsultasi", R.drawable.konsultasi, "konsultasi")
+    object Profil : BottomNavItem("Profil", R.drawable.profile, "profil")
 }
 
 @Composable

@@ -67,20 +67,16 @@ fun spesialisGizi(navController: NavController) {
                         tint = Color.Black
                     )
                 }
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(2.dp))
                 Text(
                     text = "Daftar Dokter Spesialis Gizi",
                     fontFamily = Poppins,
-                    style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold, fontSize = 18.sp, color = Color.Black),
-                    modifier = Modifier.padding(vertical = 18.dp)
+                    style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold, fontSize = 18.sp, color = Color(0xFF0D3B66)),
+                    modifier = Modifier.padding(vertical = 16.dp)
                 )
             }
 
-            Spacer(modifier = Modifier.height(20.dp))
-
-            SearchBarGizi()
-
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
             Column(modifier = Modifier
                 .fillMaxSize()
@@ -130,25 +126,6 @@ fun spesialisGizi(navController: NavController) {
 }
 
 @Composable
-fun SearchBarGizi() {
-    OutlinedTextField(
-        value = "",
-        onValueChange = {},
-        placeholder = { Text(text = "Cari dokter", fontFamily = Poppins, fontSize = 14.sp) },
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(8.dp),
-        leadingIcon = {
-            Icon(
-                painter = painterResource(id = R.drawable.search),
-                contentDescription = "Search Icon",
-                tint = Color.Black,
-                modifier = Modifier.size(20.dp)
-            )
-        }
-    )
-}
-
-@Composable
 fun GiziCard(navController: NavController, imageRes: Int, name: String, hospital: String,  route: String ) {
     Card(
         shape = RoundedCornerShape(8.dp),
@@ -170,8 +147,8 @@ fun GiziCard(navController: NavController, imageRes: Int, name: String, hospital
             )
             Spacer(modifier = Modifier.width(16.dp))
             Column {
-                Text(text = name, fontWeight = FontWeight.Bold, fontSize = 16.sp, color = Color.Black)
-                Text(text = hospital, fontSize = 14.sp, color = Color.Gray)
+                Text(text = name, fontWeight = FontWeight.Bold, fontSize = 14.sp, color = Color(0xFF0D3B66))
+                Text(text = hospital, fontSize = 12.sp, color = Color.Gray)
             }
         }
     }

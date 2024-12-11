@@ -56,39 +56,38 @@ fun nutritionStatusCalculator(navController: NavHostController) {
                         Icon(
                             painter = painterResource(id = R.drawable.back),
                             contentDescription = "Back",
-                            modifier = Modifier.size(32.dp),
-                            tint = Color.Black
+                            modifier = Modifier.size(32.dp)
                         )
                     }
-                    Spacer(modifier = Modifier.width(40.dp))
+                    Spacer(modifier = Modifier.width(26.dp))
                     Text(
                         text = "Index Massa Tubuh",
                         fontSize = 18.sp,
                         fontFamily = Poppins,
-                        color = Color.Black,
+                        color = Color(0xFF0D3B66),
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(vertical = 16.dp)
                     )
                 }
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(18.dp))
 
                 Column(
                     modifier = Modifier
                         .width(400.dp)
-                        .height(190.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                        .height(170.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
                 ){
                 Image(
                     painter = painterResource(id = R.drawable.imtrobot),
-                    contentDescription = "Food Image",
+                    contentDescription = "Robot",
                     modifier = Modifier
                         .height(160.dp)
-                        .width(200.dp)
+                        .width(180.dp)
                         .clip(RoundedCornerShape(8.dp)),
                     contentScale = ContentScale.Fit,
                     alignment = Alignment.Center
                 )
-                Spacer(modifier = Modifier.height(32.dp))}
+                Spacer(modifier = Modifier.height(18.dp))}
 
                 Column(
                     modifier = Modifier
@@ -110,7 +109,9 @@ fun nutritionStatusCalculator(navController: NavHostController) {
                                 colors = TextFieldDefaults.textFieldColors(
                                     backgroundColor = Color.White
                                 ),
-                                modifier = Modifier.fillMaxWidth()
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(46.dp),
                             )
                             DropdownMenu(
                                 expanded = isDropdownExpanded,
@@ -135,7 +136,9 @@ fun nutritionStatusCalculator(navController: NavHostController) {
                             colors = TextFieldDefaults.textFieldColors(
                                 backgroundColor = Color.White
                             ),
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(46.dp),
                         )
                     }
 
@@ -146,7 +149,9 @@ fun nutritionStatusCalculator(navController: NavHostController) {
                             colors = TextFieldDefaults.textFieldColors(
                                 backgroundColor = Color.White
                             ),
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(46.dp),
                         )
                     }
 
@@ -157,7 +162,9 @@ fun nutritionStatusCalculator(navController: NavHostController) {
                             colors = TextFieldDefaults.textFieldColors(
                                 backgroundColor = Color.White
                             ),
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(46.dp),
                         )
                     }
 
@@ -170,7 +177,7 @@ fun nutritionStatusCalculator(navController: NavHostController) {
                             .fillMaxWidth()
                             .padding(vertical = 20.dp)
                     ) {
-                        Text("Konsultasi sekarang", color = Color.Black, fontWeight = FontWeight.Bold)
+                        Text("Konsultasi sekarang", color = Color.White, fontWeight = FontWeight.Bold)
                     }
 
                     if (result.isNotEmpty()) {
@@ -190,7 +197,7 @@ fun nutritionStatusCalculator(navController: NavHostController) {
                                     text = "Kategori Status Gizi",
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 20.sp,
-                                    color = Color.Black,
+                                    color = Color(0xFF0D3B66),
                                     modifier = Modifier.padding(bottom = 8.dp)
                                 )
                                 Text(
@@ -224,7 +231,7 @@ fun CardInputField(label: String, content: @Composable () -> Unit) {
             Text(
                 text = label,
                 fontSize = 14.sp,
-                color = Color.Black,
+                color = Color(0xFF0D3B66),
                 fontFamily = Poppins,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 4.dp)

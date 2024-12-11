@@ -1,6 +1,7 @@
 package com.example.bismillah.features.Konsultasi
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -69,20 +70,17 @@ fun konsultasiScreen(navController: NavHostController){
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(color = Color(0xFFF7F7F7))
                 .padding(innerPadding)
                 .padding(top = 48.dp, start = 16.dp, end = 16.dp)
         ) {
-            Text(text = "Welcome,", fontSize = 14.sp, fontFamily = Poppins, fontWeight = FontWeight.Bold, color = Color.Black, )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "Mama $userName", fontSize = 20.sp, fontFamily = Poppins, fontWeight = FontWeight.Bold, color = Color.Black,)
+            Text(text = "Welcome,", fontSize = 14.sp, fontFamily = Poppins, fontWeight = FontWeight.Bold, color = Color(0xFF0D3B66))
+            Spacer(modifier = Modifier.height(2.dp))
+            Text(text = "Mama $userName", fontSize = 20.sp, fontFamily = Poppins, fontWeight = FontWeight.Bold, color = Color(0xFF0D3B66))
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            SearchBar()
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Text(text = "Temukan dokter spesialis", fontFamily = Poppins, fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.Black,)
+            Text(text = "Temukan dokter spesialis", fontFamily = Poppins, fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color(0xFF0D3B66))
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -97,7 +95,7 @@ fun konsultasiScreen(navController: NavHostController){
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            Text(text = "Dokter populer", fontFamily = Poppins, fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.Black,)
+            Text(text = "Dokter populer", fontFamily = Poppins, fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color(0xFF0D3B66))
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -117,26 +115,6 @@ fun konsultasiScreen(navController: NavHostController){
 }
 
 
-
-@Composable
-fun SearchBar() {
-    var searchText by remember { mutableStateOf("") }
-    OutlinedTextField(
-        value = searchText,
-        onValueChange = { searchText = it },
-        placeholder = { Text(text = "Cari dokter", fontFamily = Poppins, fontSize = 14.sp, color = Color.Black) },
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(8.dp),
-        leadingIcon = {
-            Icon(
-                painter = painterResource(id = R.drawable.search),
-                contentDescription = "Search Icon",
-                tint = Color.Black,
-                modifier = Modifier.size(20.dp)
-            )
-        }
-    )
-}
 
 @Composable
 fun SpecialitySection(onCategoryClick: (String) -> Unit) {
@@ -184,7 +162,7 @@ fun SpecialityCard(name: String, iconId: Int, onClick: () -> Unit) {
                 fontFamily = Poppins,
                 fontWeight = FontWeight.Bold,
                 fontSize = 12.sp,
-                color = Color.Black,
+                color = Color(0xFF0D3B66),
             )
         }
     }
@@ -234,11 +212,10 @@ fun DoctorCard(name: String, specialization: String, hospital: String, imageId: 
             )
             Spacer(modifier = Modifier.width(16.dp))
             Column() {
-                Text(text = name, fontWeight = FontWeight.Bold, fontFamily = Poppins, fontSize = 14.sp, color = Color.Black)
+                Text(text = name, fontWeight = FontWeight.Bold, fontFamily = Poppins, fontSize = 14.sp, color = Color(0xFF0D3B66))
                 Spacer(modifier = Modifier.height(2.dp))
-                Text(text = specialization, fontFamily = Poppins, color = Color.Gray, fontSize = 12.sp)
-                Spacer(modifier = Modifier.height(2.dp))
-                Text(text = hospital, fontFamily = Poppins, color = Color.Gray, fontSize = 12.sp)
+                Text(text = specialization, fontFamily = Poppins, color = Color.DarkGray, fontSize = 10.sp)
+                Text(text = hospital, fontFamily = Poppins, color = Color.Gray, fontSize = 10.sp)
             }
         }
     }
